@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class CourseManager : MonoBehaviour
 {
-    #region Gravity
-    private const float gravityX = 0.0f;
-    private const float gravityY = -20.0f;
-    private const float gravityZ = 0.0f;
-    #endregion
+    public static CourseManager Instance { get; private set; }
 
-    private Rigidbody golfBallRb;
-
-    void Start()
+    void Awake()
     {
-        Physics.gravity = new Vector3(gravityX, gravityY, gravityZ);
-        golfBallRb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+        // If exists
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        FirstTimeSetup();
+        Instance = this;
     }
 
-    void Update()
+    public void FirstTimeSetup()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            golfBallRb.velocity = new Vector3(-50, 20, 0);
-        }
+        Physics.gravity = new Vector3(0, -25, 0);
     }
 }

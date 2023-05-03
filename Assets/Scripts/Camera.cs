@@ -7,7 +7,7 @@ public class Camera : MonoBehaviour
     [SerializeField] private GameObject golfBall;
     [SerializeField] private float horizontal = 0;
     [SerializeField] private float vertical = 50;
-    [SerializeField] private const float distance = 20;
+    [SerializeField] private const float distance = 10;
 
     void Start()
     {
