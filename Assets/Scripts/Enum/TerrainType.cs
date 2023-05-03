@@ -1,6 +1,8 @@
 public enum TerrainType
 {
     Grass,
-    Wooden,
-    Sand
+    Wood,
+    Sand,
+    Stone,
+    OutOfBound
 }

@@ -5,11 +5,9 @@ using UnityEngine;
 public class CourseManager : MonoBehaviour
 {
     #region Gravity
-
     private const float gravityX = 0.0f;
     private const float gravityY = -20.0f;
     private const float gravityZ = 0.0f;
-
     #endregion
 
     private Rigidbody golfBallRb;

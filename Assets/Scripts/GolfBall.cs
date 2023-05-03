@@ -29,10 +29,7 @@ public partial class GolfBall : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Terrain"))
-        {
             currentlyColliding.Add(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
-            Debug.Log("Object is colliding with terrain");
-        }
     }
 
     void OnCollisionExit(Collision collision)
@@ -43,8 +40,6 @@ public partial class GolfBall : MonoBehaviour
                 currentlyColliding.Remove(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
             else
                 Debug.LogError("Exiting collision from terrain that was never entered!");
-
-            Debug.Log("Object is not colliding with terrain");
         }
     }
 
