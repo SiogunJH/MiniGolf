@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Arrow : MonoBehaviour
 {
     private GameObject golfBall;
+    private MeshRenderer meshRenderer;
     public float angleH = 0;
     public float angleV = 0;
     private float currentBounce = 0;
@@ -12,7 +14,20 @@ public class Arrow : MonoBehaviour
 
     void Start()
     {
+        // Define variables
         golfBall = GameObject.FindGameObjectWithTag("Player");
+        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+
+        // Disable shadow casting
+        meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
+
+        // Make a bit transparent
+        Color newColor = meshRenderer.material.color;
+        newColor.a = 0.1f;
+        meshRenderer.material.color = newColor;
+
+
+
     }
 
     void Update()
