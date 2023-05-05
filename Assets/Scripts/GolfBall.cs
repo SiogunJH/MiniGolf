@@ -52,16 +52,26 @@ public partial class GolfBall : MonoBehaviour
     {
         // Apply friction
         if (currentlyColliding.Contains(TerrainType.Sand))
+        {
             golfBallRb.drag = 6.0f;
+            //golfBallRb.angularDrag = 6.0f;
+        }
         else if (currentlyColliding.Contains(TerrainType.Grass))
-            golfBallRb.drag = 1.0f;
+        {
+            golfBallRb.drag = 0.8f;
+            //golfBallRb.angularDrag = 1.0f;
+        }
         else
+        {
             golfBallRb.drag = 0.1f;
+            //golfBallRb.angularDrag = 0.1f;
+        }
 
         // Check if still
         if (golfBallRb.velocity.magnitude < 0.05f)
         {
             golfBallRb.velocity = new Vector3(0, 0, 0);
+            golfBallRb.angularVelocity = new Vector3(0, 0, 0);
             golfBallStatus = BallStatus.AwaitingHit;
             EnableArrow();
         }
@@ -74,7 +84,7 @@ public partial class GolfBall : MonoBehaviour
         float forceZ = strength * (1 - arrow.angleV / 90) * Mathf.Cos(arrow.angleH / 180 * Mathf.PI);
 
         golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
-        golfBallRb.AddTorque(forceZ, forceY, forceX, ForceMode.Impulse);
+        golfBallRb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);
 
         golfBallStatus = BallStatus.Moving;
         DisableArrow();
