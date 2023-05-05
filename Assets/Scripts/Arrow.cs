@@ -20,29 +20,14 @@ public class Arrow : MonoBehaviour
 
         // Disable shadow casting
         meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
-
-        // Make a bit transparent
-        Color newColor = meshRenderer.material.color;
-        newColor.a = 0.1f;
-        meshRenderer.material.color = newColor;
-
-
-
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-            angleH -= 90 * Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.D))
-            angleH += 90 * Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.W))
-            angleV += 60 * Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.S))
-            angleV -= 60 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A)) angleH -= 90 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.D)) angleH += 90 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.W)) angleV += 60 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.S)) angleV -= 60 * Time.deltaTime;
 
         angleH += angleH < 0 ? 360 : angleH >= 360 ? -360 : 0; // restrict to range <0:360) and wrap around
         angleV = angleV < 0 ? 0 : angleV > 70 ? 70 : angleV; // restrict to range <0:70)

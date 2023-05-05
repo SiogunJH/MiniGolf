@@ -29,7 +29,7 @@ public partial class GolfBall : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Hit(40);
+            Hit(100);
         }
     }
 
@@ -60,12 +60,16 @@ public partial class GolfBall : MonoBehaviour
         */
         if (currentlyColliding.Contains(TerrainType.Grass))
         {
-            if (golfBallRb.velocity.magnitude > 5.0f)
+            if (golfBallRb.velocity.magnitude > 125.0f)
+                golfBallRb.AddForce(-golfBallRb.velocity * 0.0125f);
+            else if (golfBallRb.velocity.magnitude > 25.0f)
                 golfBallRb.AddForce(-golfBallRb.velocity * 0.025f);
+            else if (golfBallRb.velocity.magnitude > 5.0f)
+                golfBallRb.AddForce(-golfBallRb.velocity * 0.05f);
             else if (golfBallRb.velocity.magnitude > 1.0f)
                 golfBallRb.AddForce(-golfBallRb.velocity * 0.1f);
-            else if (golfBallRb.velocity.magnitude > 0.1f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.25f);
+            else if (golfBallRb.velocity.magnitude > 0.2f)
+                golfBallRb.AddForce(-golfBallRb.velocity * 0.2f);
         }
 
         /*
@@ -77,9 +81,9 @@ public partial class GolfBall : MonoBehaviour
 
     void Hit(float strength)
     {
-        float forceX = strength * Mathf.Sin(arrow.angleH / 180 * Mathf.PI);
-        float forceY = strength * (arrow.angleV / 80);
-        float forceZ = strength * Mathf.Cos(arrow.angleH / 180 * Mathf.PI);
+        float forceX = strength * (1 - arrow.angleV / 90) * Mathf.Sin(arrow.angleH / 180 * Mathf.PI);
+        float forceY = strength * (arrow.angleV / 90);
+        float forceZ = strength * (1 - arrow.angleV / 90) * Mathf.Cos(arrow.angleH / 180 * Mathf.PI);
 
         golfBallRb.velocity = new Vector3(forceX, forceY, forceZ);
 
