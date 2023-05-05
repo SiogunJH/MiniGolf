@@ -68,7 +68,7 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Check if still
-        if (golfBallRb.velocity.magnitude < 0.05f)
+        if (golfBallRb.velocity.magnitude < 0.25f)
         {
             golfBallRb.velocity = new Vector3(0, 0, 0);
             golfBallRb.angularVelocity = new Vector3(0, 0, 0);
