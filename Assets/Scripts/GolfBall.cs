@@ -7,11 +7,13 @@ public partial class GolfBall : MonoBehaviour
     // Objects and Components variables
     public Collider golfBallCol;
     public Rigidbody golfBallRb;
+    public PowerMeter powerMeter;
     public Arrow arrow;
 
     // Other variables
-    [SerializeField] private List<TerrainType> currentlyColliding;
+    private List<TerrainType> currentlyColliding;
     private BallStatus golfBallStatus;
+    private float powerMeterSpeed;
 
     void Start()
     {
@@ -20,7 +22,9 @@ public partial class GolfBall : MonoBehaviour
         golfBallRb = GetComponent<Rigidbody>();
         currentlyColliding = new();
         arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Arrow>();
+        powerMeter = GameObject.FindGameObjectWithTag("Power Meter").GetComponent<PowerMeter>();
         golfBallStatus = BallStatus.AwaitingHit;
+        powerMeterSpeed = 100.0f;
 
         // Set bounciness
         if (golfBallCol != null) golfBallCol.material.bounciness = 1.0f;
@@ -29,9 +33,19 @@ public partial class GolfBall : MonoBehaviour
 
     void Update()
     {
-        if (golfBallStatus == BallStatus.Moving) DeaccelerateGolfBall();
-        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyDown(KeyCode.Space))
-            Hit(80);
+        if (golfBallStatus == BallStatus.Moving)
+        {
+            DeaccelerateGolfBall();
+        }
+        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyCode.Space))
+        {
+            powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
+        }
+        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyUp(KeyCode.Space))
+        {
+            Hit(powerMeter.sliderValue);
+            powerMeter.sliderValue = 0;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
