@@ -2,5 +2,6 @@ public enum BallStatus
 {
     Still,
     Moving,
-    NotExisting,
+    Disabled,
+    AwaitingHit,
 }

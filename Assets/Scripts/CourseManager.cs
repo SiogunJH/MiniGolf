@@ -5,7 +5,6 @@ using UnityEngine;
 public class CourseManager : MonoBehaviour
 {
     public static CourseManager Instance { get; private set; }
-
     void Awake()
     {
         // If exists

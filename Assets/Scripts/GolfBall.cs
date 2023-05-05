@@ -4,11 +4,14 @@ using UnityEngine;
 
 public partial class GolfBall : MonoBehaviour
 {
-    [SerializeField] private List<TerrainType> currentlyColliding;
-    private const float bounciness = 0.75f;
+    // Objects and Components variables
     public Collider golfBallCol;
     public Rigidbody golfBallRb;
     public Arrow arrow;
+
+    // Other variables
+    [SerializeField] private List<TerrainType> currentlyColliding;
+    private BallStatus golfBallStatus;
 
     void Start()
     {
@@ -17,20 +20,18 @@ public partial class GolfBall : MonoBehaviour
         golfBallRb = GetComponent<Rigidbody>();
         currentlyColliding = new();
         arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Arrow>();
+        golfBallStatus = BallStatus.AwaitingHit;
 
         // Set bounciness
-        if (golfBallCol != null) golfBallCol.material.bounciness = bounciness;
+        if (golfBallCol != null) golfBallCol.material.bounciness = 1.0f;
         else Debug.LogError("GameObject has no collider!");
     }
 
     void Update()
     {
-        DeaccelerateGolfBall();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Hit(100);
-        }
+        if (golfBallStatus == BallStatus.Moving) DeaccelerateGolfBall();
+        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyDown(KeyCode.Space))
+            Hit(80);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -44,39 +45,26 @@ public partial class GolfBall : MonoBehaviour
     {
         // If the collider is of Terrain type, remove it's type from the list
         if (collision.gameObject.CompareTag("Terrain"))
-        {
-            if (currentlyColliding.Contains(collision.gameObject.GetComponent<TerrainCollision>().terrainType))
-                currentlyColliding.Remove(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
-            else //This error should never be sent
-                Debug.LogError("Exiting collision from terrain that was never entered!");
-        }
+            currentlyColliding.Remove(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
     }
 
     void DeaccelerateGolfBall()
     {
-        /*
-                Pick out the strongest terrain friction
-                from list of terrain list and apply it
-        */
-        if (currentlyColliding.Contains(TerrainType.Grass))
-        {
-            if (golfBallRb.velocity.magnitude > 125.0f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.0125f);
-            else if (golfBallRb.velocity.magnitude > 25.0f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.025f);
-            else if (golfBallRb.velocity.magnitude > 5.0f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.05f);
-            else if (golfBallRb.velocity.magnitude > 1.0f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.1f);
-            else if (golfBallRb.velocity.magnitude > 0.2f)
-                golfBallRb.AddForce(-golfBallRb.velocity * 0.2f);
-        }
+        // Apply friction
+        if (currentlyColliding.Contains(TerrainType.Sand))
+            golfBallRb.drag = 6.0f;
+        else if (currentlyColliding.Contains(TerrainType.Grass))
+            golfBallRb.drag = 1.0f;
+        else
+            golfBallRb.drag = 0.1f;
 
-        /*
-            TODO: 
-                Check if nearly still for over 1 second
-                then stop completely and allow player to shoot
-        */
+        // Check if still
+        if (golfBallRb.velocity.magnitude < 0.05f)
+        {
+            golfBallRb.velocity = new Vector3(0, 0, 0);
+            golfBallStatus = BallStatus.AwaitingHit;
+            EnableArrow();
+        }
     }
 
     void Hit(float strength)
@@ -85,8 +73,19 @@ public partial class GolfBall : MonoBehaviour
         float forceY = strength * (arrow.angleV / 90);
         float forceZ = strength * (1 - arrow.angleV / 90) * Mathf.Cos(arrow.angleH / 180 * Mathf.PI);
 
-        golfBallRb.velocity = new Vector3(forceX, forceY, forceZ);
+        golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
+        golfBallRb.AddTorque(forceZ, forceY, forceX, ForceMode.Impulse);
 
-        golfBallRb.AddTorque(Random.Range(1, 30), Random.Range(1, 30), Random.Range(1, 30));
+        golfBallStatus = BallStatus.Moving;
+        DisableArrow();
+    }
+
+    void DisableArrow()
+    {
+        arrow.gameObject.SetActive(false);
+    }
+    void EnableArrow()
+    {
+        arrow.gameObject.SetActive(true);
     }
 }

@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-
+    // Other Variables
     private GameObject golfBall;
+
+    // Rotation
     [SerializeField] private float rotX = 50;
     [SerializeField] private float rotY = 0;
     [SerializeField] private float rotZ = 0;
+
+    // Position
     [SerializeField] private float posX;
     [SerializeField] private float posY;
     [SerializeField] private float posZ;
     [SerializeField] private float radius = 10;
-    private float newRadius;
+    [HideInInspector] private float newRadius;
 
     void Start()
     {
@@ -27,7 +31,7 @@ public class Camera : MonoBehaviour
 
     void LateUpdate()
     {
-        // UPDATE ROTATION as FIRST
+        // UPDATE ROTATION
         rotY = (rotY + Input.GetAxis("Mouse X"));
         rotY += rotY < 0 ? 360 : rotY >= 360 ? -360 : 0; // restrict to range <0:360) and wrap around
         rotX = (rotX - Input.GetAxis("Mouse Y"));
@@ -35,7 +39,7 @@ public class Camera : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
 
-        // UPDATE POSITION as SECOND and BASE IT AROUND ROTATION
+        // UPDATE POSITION based on rotation
         newRadius = radius * Mathf.Cos((transform.eulerAngles.x) / 180 * Mathf.PI);
 
         posX = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y) / 180 * Mathf.PI);
