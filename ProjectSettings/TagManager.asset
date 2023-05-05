@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Arrow
+  - Power Meter
   layers:
   - Default
   - TransparentFX
