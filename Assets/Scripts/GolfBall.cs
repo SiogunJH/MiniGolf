@@ -5,10 +5,11 @@ using UnityEngine;
 public partial class GolfBall : MonoBehaviour
 {
     // Objects and Components variables
-    public Collider golfBallCol;
+    public BoxCollider golfBallCol;
     public Rigidbody golfBallRb;
     public PowerMeter powerMeter;
     public Arrow arrow;
+    public GameObject terrainCluster;
 
     // Other variables
     private List<TerrainType> currentlyColliding;
@@ -18,17 +19,18 @@ public partial class GolfBall : MonoBehaviour
     void Start()
     {
         // Define variables
-        golfBallCol = GetComponent<Collider>();
+        golfBallCol = GetComponent<BoxCollider>();
         golfBallRb = GetComponent<Rigidbody>();
         currentlyColliding = new();
         arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Arrow>();
         powerMeter = GameObject.FindGameObjectWithTag("Power Meter").GetComponent<PowerMeter>();
         golfBallStatus = BallStatus.AwaitingHit;
         powerMeterSpeed = 100.0f;
+        terrainCluster = GameObject.FindWithTag("Terrain");
 
-        // Set bounciness
-        if (golfBallCol != null) golfBallCol.material.bounciness = 1.0f;
-        else Debug.LogError("GameObject has no collider!");
+        // // Set bounciness
+        // if (golfBallCol != null) golfBallCol.material.bounciness = 1.0f;
+        // else Debug.LogError("GameObject has no collider!");
     }
 
     void Update()
@@ -51,15 +53,30 @@ public partial class GolfBall : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // If the collider is of Terrain type, add it's type to the list
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.transform.IsChildOf(terrainCluster.transform))
+        {
+            if (collision.gameObject.GetComponent<TerrainCollision>() == null)
+            {
+                Debug.LogError("This GameObject in Terrain cluster has no TerrainType signed to it!");
+                return;
+            }
             currentlyColliding.Add(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
+            //Debug.Log($"Bouncing of {collision.gameObject.GetComponent<TerrainCollision>().terrainType}");
+        }
     }
 
     void OnCollisionExit(Collision collision)
     {
         // If the collider is of Terrain type, remove it's type from the list
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (collision.transform.IsChildOf(terrainCluster.transform))
+        {
+            if (collision.gameObject.GetComponent<TerrainCollision>() == null)
+            {
+                Debug.LogError("This GameObject in Terrain cluster has no TerrainType signed to it!");
+                return;
+            }
             currentlyColliding.Remove(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
+        }
     }
 
     void DeaccelerateGolfBall()

@@ -15,7 +15,7 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         // Define variables
-        golfBall = GameObject.FindGameObjectWithTag("Player");
+        golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
         // Disable shadow casting

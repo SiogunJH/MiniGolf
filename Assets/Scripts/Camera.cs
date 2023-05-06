@@ -22,7 +22,7 @@ public class Camera : MonoBehaviour
     void Start()
     {
         // Set variables
-        golfBall = GameObject.FindGameObjectWithTag("Player");
+        golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
 
         // Cursor behavior
         Cursor.lockState = CursorLockMode.Locked;
@@ -35,7 +35,7 @@ public class Camera : MonoBehaviour
         rotY = (rotY + Input.GetAxis("Mouse X"));
         rotY += rotY < 0 ? 360 : rotY >= 360 ? -360 : 0; // restrict to range <0:360) and wrap around
         rotX = (rotX - Input.GetAxis("Mouse Y"));
-        rotX = rotX < 10 ? 10 : rotX > 80 ? 80 : rotX; // restrict to range <0:360) but dont wrap
+        rotX = rotX < 5 ? 5 : rotX > 90 ? 90 : rotX; // restrict to range <5:90> but dont wrap
 
         transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
 

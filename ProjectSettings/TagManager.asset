@@ -7,6 +7,7 @@ TagManager:
   - Terrain
   - Arrow
   - Power Meter
+  - Golf Ball
   layers:
   - Default
   - TransparentFX
