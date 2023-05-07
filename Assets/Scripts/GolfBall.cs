@@ -35,10 +35,22 @@ public partial class GolfBall : MonoBehaviour
 
     void Update()
     {
-        if (golfBallStatus == BallStatus.Moving)
+        // Apply Friction
+        if (golfBallStatus == BallStatus.Moving || golfBallStatus == BallStatus.TryingToStop)
         {
-            DeaccelerateGolfBall();
+            Deaccelerate();
         }
+
+        // Disable Hit Mechanic if the GolfBall started Moving from being AwaitingHit
+        if (golfBallRb.velocity.magnitude > 0.1f)
+        {
+            powerMeter.sliderValue = 0;
+
+            golfBallStatus = BallStatus.Moving;
+            DisableArrow();
+        }
+
+        // Hit Mechanic
         else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyCode.Space))
         {
             powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
@@ -57,7 +69,7 @@ public partial class GolfBall : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<TerrainCollision>() == null)
             {
-                Debug.LogError("This GameObject in Terrain cluster has no TerrainType signed to it!");
+                Debug.LogError($"{collision.gameObject.name} has no TerrainType signed to it!");
                 return;
             }
             currentlyColliding.Add(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
@@ -79,32 +91,27 @@ public partial class GolfBall : MonoBehaviour
         }
     }
 
-    void DeaccelerateGolfBall()
+    void Deaccelerate()
     {
         // Apply friction
         if (currentlyColliding.Contains(TerrainType.Sand))
         {
             golfBallRb.drag = 6.0f;
-            //golfBallRb.angularDrag = 6.0f;
         }
         else if (currentlyColliding.Contains(TerrainType.Grass))
         {
             golfBallRb.drag = 0.8f;
-            //golfBallRb.angularDrag = 1.0f;
         }
         else
         {
             golfBallRb.drag = 0.1f;
-            //golfBallRb.angularDrag = 0.1f;
         }
 
-        // Check if still
+        // Check if nearly still
         if (golfBallRb.velocity.magnitude < 0.25f)
         {
-            golfBallRb.velocity = new Vector3(0, 0, 0);
-            golfBallRb.angularVelocity = new Vector3(0, 0, 0);
-            golfBallStatus = BallStatus.AwaitingHit;
-            EnableArrow();
+            golfBallStatus = BallStatus.TryingToStop;
+            StartCoroutine("TryToStop");
         }
     }
 
@@ -119,6 +126,23 @@ public partial class GolfBall : MonoBehaviour
 
         golfBallStatus = BallStatus.Moving;
         DisableArrow();
+    }
+
+    IEnumerator TryToStop()
+    {
+        //Debug.Log("Testing if stopped");
+        yield return new WaitForSeconds(1.0f);
+        if (golfBallRb.velocity.magnitude < 0.2f)
+        {
+            golfBallRb.velocity = new Vector3(0, 0, 0);
+            golfBallRb.angularVelocity = new Vector3(0, 0, 0);
+            golfBallStatus = BallStatus.AwaitingHit;
+            EnableArrow();
+        }
+        else
+        {
+            golfBallStatus = BallStatus.Moving;
+        }
     }
 
     void DisableArrow()
