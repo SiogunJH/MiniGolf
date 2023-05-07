@@ -42,7 +42,7 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Disable Hit Mechanic if the GolfBall started Moving from being AwaitingHit
-        if (golfBallRb.velocity.magnitude > 0.1f)
+        if (golfBallStatus == BallStatus.AwaitingHit && golfBallRb.velocity.magnitude > 0.1f)
         {
             powerMeter.sliderValue = 0;
 
@@ -51,7 +51,7 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Hit Mechanic
-        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyCode.Space))
+        if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyCode.Space))
         {
             powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
         }
@@ -108,7 +108,7 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Check if nearly still
-        if (golfBallRb.velocity.magnitude < 0.25f)
+        if (golfBallRb.velocity.magnitude < 0.25f && golfBallStatus != BallStatus.TryingToStop)
         {
             golfBallStatus = BallStatus.TryingToStop;
             StartCoroutine("TryToStop");
@@ -130,8 +130,7 @@ public partial class GolfBall : MonoBehaviour
 
     IEnumerator TryToStop()
     {
-        //Debug.Log("Testing if stopped");
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         if (golfBallRb.velocity.magnitude < 0.2f)
         {
             golfBallRb.velocity = new Vector3(0, 0, 0);
