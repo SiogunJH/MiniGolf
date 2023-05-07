@@ -2,5 +2,5 @@
 
 #### GameObjects Properties:
 - Golf Ball
-  - 5cm
+  - 5 cm
   - 1 kg
