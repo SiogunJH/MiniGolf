@@ -14,29 +14,33 @@ public partial class GolfBall : MonoBehaviour
     // Other variables
     private List<TerrainType> currentlyColliding;
     private BallStatus golfBallStatus;
+    private bool tryingToStop;
     private float powerMeterSpeed;
 
     void Start()
     {
-        // Define variables
+        // Define object component references
         golfBallCol = GetComponent<BoxCollider>();
         golfBallRb = GetComponent<Rigidbody>();
-        currentlyColliding = new();
+
+        // Define other object references
         arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Arrow>();
         powerMeter = GameObject.FindGameObjectWithTag("Power Meter").GetComponent<PowerMeter>();
-        golfBallStatus = BallStatus.AwaitingHit;
-        powerMeterSpeed = 100.0f;
         terrainCluster = GameObject.FindWithTag("Terrain");
 
-        // // Set bounciness
-        // if (golfBallCol != null) golfBallCol.material.bounciness = 1.0f;
-        // else Debug.LogError("GameObject has no collider!");
+        // Initiate collections
+        currentlyColliding = new();
+
+        // Set values
+        golfBallStatus = BallStatus.AwaitingHit;
+        powerMeterSpeed = 100.0f;
+        tryingToStop = false;
     }
 
     void Update()
     {
         // Apply Friction
-        if (golfBallStatus == BallStatus.Moving || golfBallStatus == BallStatus.TryingToStop)
+        if (golfBallStatus == BallStatus.Moving)
         {
             Deaccelerate();
         }
@@ -45,7 +49,6 @@ public partial class GolfBall : MonoBehaviour
         if (golfBallStatus == BallStatus.AwaitingHit && golfBallRb.velocity.magnitude > 0.1f)
         {
             powerMeter.sliderValue = 0;
-
             golfBallStatus = BallStatus.Moving;
             DisableArrow();
         }
@@ -58,7 +61,10 @@ public partial class GolfBall : MonoBehaviour
         else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyUp(KeyCode.Space))
         {
             Hit(powerMeter.sliderValue);
+
             powerMeter.sliderValue = 0;
+            golfBallStatus = BallStatus.Moving;
+            DisableArrow();
         }
     }
 
@@ -108,9 +114,8 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Check if nearly still
-        if (golfBallRb.velocity.magnitude < 0.25f && golfBallStatus != BallStatus.TryingToStop)
+        if (golfBallRb.velocity.magnitude < 0.25f && !tryingToStop)
         {
-            golfBallStatus = BallStatus.TryingToStop;
             StartCoroutine("TryToStop");
         }
     }
@@ -123,14 +128,14 @@ public partial class GolfBall : MonoBehaviour
 
         golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
         golfBallRb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);
-
-        golfBallStatus = BallStatus.Moving;
-        DisableArrow();
     }
 
     IEnumerator TryToStop()
     {
+        tryingToStop = true;
+
         yield return new WaitForSeconds(0.5f);
+
         if (golfBallRb.velocity.magnitude < 0.2f)
         {
             golfBallRb.velocity = new Vector3(0, 0, 0);
@@ -142,6 +147,8 @@ public partial class GolfBall : MonoBehaviour
         {
             golfBallStatus = BallStatus.Moving;
         }
+
+        tryingToStop = false;
     }
 
     void DisableArrow()
