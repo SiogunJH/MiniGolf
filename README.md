@@ -1,2 +1,6 @@
-# Unity-GolfMinigame
- A simple start to game development - my first private project, focused around models, physics and textures
+## Technical Information for Development
+
+#### GameObjects Properties:
+- Golf Ball
+  - 5 cm
+  - 1 kg
