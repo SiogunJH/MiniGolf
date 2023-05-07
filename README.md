@@ -1,4 +1,6 @@
 ## Technical Information for Development
 
-#### Sizes:
-- Golf Ball: 5cm
+#### GameObjects Properties:
+- Golf Ball
+ - 5cm
+ - 1 kg
