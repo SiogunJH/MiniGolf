@@ -18,7 +18,7 @@ public partial class GolfBall : MonoBehaviour
         }
         else if (currentlyColliding.Contains(TerrainType.Wood))
         {
-            golfBallRb.drag = 0.4f;
+            golfBallRb.drag = 0.25f;
         }
         else
         {

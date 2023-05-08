@@ -22,8 +22,8 @@ public class TerrainCollision : MonoBehaviour
 
     float GetBounciness()
     {
-        if (terrainType == TerrainType.Wood) return 0.7f;
-        if (terrainType == TerrainType.Grass) return 0.5f;
+        if (terrainType == TerrainType.Wood) return 0.6f;
+        if (terrainType == TerrainType.Grass) return 0.4f;
         if (terrainType == TerrainType.Sand) return 0.025f;
 
 

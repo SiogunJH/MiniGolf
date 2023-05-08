@@ -14,7 +14,7 @@ public class PowerMeter : MonoBehaviour
 
     void Start()
     {
-        slider = transform.Find("Power Slider").GetComponent<Slider>();
+        slider = GetComponent<Slider>();
     }
 
     public void ChangeValue(float delta) => slider.value += delta;
