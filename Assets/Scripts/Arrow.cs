@@ -7,7 +7,6 @@ public class Arrow : MonoBehaviour
 {
     // References
     private GameObject golfBall;
-    private MeshRenderer meshRenderer;
 
     // Rotation
     [HideInInspector] public float rotY = 0;
@@ -25,10 +24,6 @@ public class Arrow : MonoBehaviour
     {
         // Define object and reference variables
         golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
-        meshRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
-
-        // Disable shadow casting
-        meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
     }
 
     void Update()
