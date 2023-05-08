@@ -122,9 +122,9 @@ public partial class GolfBall : MonoBehaviour
 
     void Hit(float strength)
     {
-        float forceX = strength * (1 - arrow.angleV / 90) * Mathf.Sin(arrow.angleH / 180 * Mathf.PI);
-        float forceY = strength * (arrow.angleV / 90);
-        float forceZ = strength * (1 - arrow.angleV / 90) * Mathf.Cos(arrow.angleH / 180 * Mathf.PI);
+        float forceX = strength * (1 - arrow.angleV / 90) * Mathf.Sin(arrow.angleH.ToRadians());
+        float forceY = strength * (0 + arrow.angleV / 90);
+        float forceZ = strength * (1 - arrow.angleV / 90) * Mathf.Cos(arrow.angleH.ToRadians());
 
         golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
         golfBallRb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);

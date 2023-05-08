@@ -5,18 +5,29 @@ using UnityEngine.Rendering;
 
 public class Arrow : MonoBehaviour
 {
+    // References
     private GameObject golfBall;
     private MeshRenderer meshRenderer;
-    public float angleH = 0;
-    public float angleV = 0;
+
+    // Rotation
+    [HideInInspector] public float angleH = 0;
+    [HideInInspector] public float angleV = 0;
+
+    // Position
+    private float posX;
+    private float posY;
+    private float posZ;
     private float currentBounce = 0;
-    private const float constBounce = 0.1f;
+    private const float constBounce = 0.3f;
+    private const float distance = 1f;
 
     void Start()
     {
-        // Define variables
+        // Define object and reference variables
         golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        meshRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+
+        // Define other variables
 
         // Disable shadow casting
         meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
@@ -29,8 +40,8 @@ public class Arrow : MonoBehaviour
         if (Input.GetKey(KeyCode.W)) angleV += 60 * Time.deltaTime;
         if (Input.GetKey(KeyCode.S)) angleV -= 60 * Time.deltaTime;
 
-        angleH += angleH < 0 ? 360 : angleH >= 360 ? -360 : 0; // restrict to range <0:360) and wrap around
-        angleV = angleV < 0 ? 0 : angleV > 70 ? 70 : angleV; // restrict to range <0:70)
+        angleH.RestrictBetween(0, 360, true);
+        angleV.RestrictBetween(0, 70, false);
 
         currentBounce = (currentBounce + 180 * Time.deltaTime) % 360;
     }
@@ -39,17 +50,16 @@ public class Arrow : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(-angleV, angleH, 0);
 
-        float angleVFraction = angleV / 90.0f;
-        float bounce = 1 + constBounce * Mathf.Sin(currentBounce / 180 * Mathf.PI);
+        float bounce = distance + constBounce * Mathf.Sin(currentBounce.ToRadians());
 
-        float offsetX = bounce * 2.5f * (1 - angleVFraction) * Mathf.Sin(angleH / 180 * Mathf.PI);
-        float offsetZ = bounce * 2.5f * (1 - angleVFraction) * Mathf.Cos(angleH / 180 * Mathf.PI);
-        float offsetY = bounce * 2.5f * angleVFraction;
+        float offsetX = bounce * (Mathf.Cos(angleV.ToRadians())) * Mathf.Sin(angleH.ToRadians());
+        float offsetZ = bounce * (Mathf.Cos(angleV.ToRadians())) * Mathf.Cos(angleH.ToRadians());
+        float offsetY = bounce * angleV / 90;
 
-        float newX = golfBall.transform.position.x + offsetX;
-        float newZ = golfBall.transform.position.z + offsetZ;
-        float newY = golfBall.transform.position.y + offsetY;
+        posX = golfBall.transform.position.x + offsetX;
+        posZ = golfBall.transform.position.z + offsetZ;
+        posY = golfBall.transform.position.y + offsetY;
 
-        transform.position = new Vector3(newX, newY, newZ);
+        transform.position = new Vector3(posX, posY, posZ);
     }
 }

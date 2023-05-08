@@ -33,18 +33,18 @@ public class Camera : MonoBehaviour
     {
         // UPDATE ROTATION
         rotY = (rotY + Input.GetAxis("Mouse X"));
-        rotY += rotY < 0 ? 360 : rotY >= 360 ? -360 : 0; // restrict to range <0:360) and wrap around
+        rotY.RestrictBetween(0, 360, true);
         rotX = (rotX - Input.GetAxis("Mouse Y"));
-        rotX = rotX < 5 ? 5 : rotX > 90 ? 90 : rotX; // restrict to range <5:90> but dont wrap
+        rotX.RestrictBetween(5, 90, false);
 
         transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
 
         // UPDATE POSITION based on rotation
-        newRadius = radius * Mathf.Cos((transform.eulerAngles.x) / 180 * Mathf.PI);
+        newRadius = radius * Mathf.Cos((transform.eulerAngles.x).ToRadians());
 
-        posX = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y) / 180 * Mathf.PI);
-        posZ = golfBall.transform.position.z + newRadius * Mathf.Cos((transform.eulerAngles.y + 180) / 180 * Mathf.PI);
-        posY = golfBall.transform.position.y + radius * Mathf.Sin((transform.eulerAngles.x) / 180 * Mathf.PI);
+        posX = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y).ToRadians());
+        posZ = golfBall.transform.position.z + newRadius * Mathf.Cos((transform.eulerAngles.y + 180).ToRadians());
+        posY = golfBall.transform.position.y + radius * Mathf.Sin((transform.eulerAngles.x).ToRadians());
 
         transform.position = new Vector3(posX, posY, posZ);
     }
