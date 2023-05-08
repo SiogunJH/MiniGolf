@@ -23,7 +23,7 @@ public class TerrainCollision : MonoBehaviour
     float GetBounciness()
     {
         if (terrainType == TerrainType.Grass) return 0.5f;
-        if (terrainType == TerrainType.Sand) return 0.01f;
+        if (terrainType == TerrainType.Sand) return 0.025f;
 
 
         Debug.LogError($"Terrain Type of {terrainType} has no bounciness signed to it!");

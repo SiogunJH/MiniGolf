@@ -10,15 +10,15 @@ public class Arrow : MonoBehaviour
     private MeshRenderer meshRenderer;
 
     // Rotation
-    [HideInInspector] public float angleH = 0;
-    [HideInInspector] public float angleV = 0;
+    [HideInInspector] public float rotY = 0;
+    [HideInInspector] public float rotX = 0;
 
     // Position
     private float posX;
     private float posY;
     private float posZ;
     private float currentBounce = 0;
-    private const float constBounce = 0.3f;
+    private const float constBounce = 0.2f;
     private const float distance = 1f;
 
     void Start()
@@ -35,30 +35,25 @@ public class Arrow : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A)) angleH -= 90 * Time.deltaTime;
-        if (Input.GetKey(KeyCode.D)) angleH += 90 * Time.deltaTime;
-        if (Input.GetKey(KeyCode.W)) angleV += 60 * Time.deltaTime;
-        if (Input.GetKey(KeyCode.S)) angleV -= 60 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A)) rotY -= 90 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.D)) rotY += 90 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.W)) rotX += 60 * Time.deltaTime;
+        if (Input.GetKey(KeyCode.S)) rotX -= 60 * Time.deltaTime;
 
-        angleH.RestrictBetween(0, 360, true);
-        angleV.RestrictBetween(0, 70, false);
+        rotY.RestrictBetween(0, 360, true);
+        rotX.RestrictBetween(0, 70, false);
 
-        currentBounce = (currentBounce + 180 * Time.deltaTime) % 360;
+        currentBounce = (currentBounce + 200 * Time.deltaTime) % 360;
     }
 
     void LateUpdate()
     {
-        transform.rotation = Quaternion.Euler(-angleV, angleH, 0);
+        transform.rotation = Quaternion.Euler(-rotX, rotY, 0);
 
-        float bounce = distance + constBounce * Mathf.Sin(currentBounce.ToRadians());
-
-        float offsetX = bounce * (Mathf.Cos(angleV.ToRadians())) * Mathf.Sin(angleH.ToRadians());
-        float offsetZ = bounce * (Mathf.Cos(angleV.ToRadians())) * Mathf.Cos(angleH.ToRadians());
-        float offsetY = bounce * angleV / 90;
-
-        posX = golfBall.transform.position.x + offsetX;
-        posZ = golfBall.transform.position.z + offsetZ;
-        posY = golfBall.transform.position.y + offsetY;
+        // Golf Ball Position + (Bounce Offset) * Rotation Offset
+        posX = golfBall.transform.position.x + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rotX.ToRadians()) * Mathf.Sin(rotY.ToRadians());
+        posZ = golfBall.transform.position.z + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rotX.ToRadians()) * Mathf.Cos(rotY.ToRadians());
+        posY = golfBall.transform.position.y + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Sin(rotX.ToRadians());
 
         transform.position = new Vector3(posX, posY, posZ);
     }
