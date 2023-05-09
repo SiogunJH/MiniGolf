@@ -62,5 +62,9 @@ public partial class GolfBall : MonoBehaviour
             golfBallStatus = BallStatus.Moving;
             DisableArrow();
         }
+
+        // --==## TEMP ##==--
+        if (Input.GetKeyDown(KeyCode.R))
+            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
     }
 }

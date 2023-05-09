@@ -37,4 +37,10 @@ public partial class GolfBall : MonoBehaviour
 
         tryingToStop = false;
     }
+
+    void GoTo(Vector3 pos)
+    {
+        golfBallRb.velocity = new Vector3(0, 0, 0);
+        transform.position = pos;
+    }
 }
