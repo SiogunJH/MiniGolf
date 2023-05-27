@@ -4,5 +4,7 @@ public enum TerrainType
     Wood,
     Sand,
     Stone,
+    Plastic,
+    Metal,
     OutOfBound
 }

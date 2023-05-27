@@ -5,12 +5,12 @@ using UnityEngine;
 public partial class GolfBall : MonoBehaviour
 {
     // Golf Ball refs and vars
-    public BoxCollider golfBallCol;
-    public Rigidbody golfBallRb;
+    [HideInInspector] public BoxCollider golfBallCol;
+    [HideInInspector] public Rigidbody golfBallRb;
     private BallStatus golfBallStatus;
 
     // Power Meter refs and vars
-    public PowerMeter powerMeter;
+    [HideInInspector] public PowerMeter powerMeter;
     private float powerMeterSpeed;
 
     void Start()
@@ -25,7 +25,7 @@ public partial class GolfBall : MonoBehaviour
 
         // Define Power Meter refs and vars
         powerMeter = GameObject.FindGameObjectWithTag("Power Meter").GetComponent<PowerMeter>();
-        powerMeterSpeed = 100.0f;
+        powerMeterSpeed = powerMeter.slider.maxValue * 1.5f;
 
         // Define other
         terrainCluster = GameObject.FindWithTag("Terrain");

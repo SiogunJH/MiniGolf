@@ -20,6 +20,10 @@ public partial class GolfBall : MonoBehaviour
         {
             golfBallRb.drag = 0.25f;
         }
+        else if (currentlyColliding.Contains(TerrainType.Plastic))
+        {
+            golfBallRb.drag = 0.2f;
+        }
         else
         {
             golfBallRb.drag = 0.1f;

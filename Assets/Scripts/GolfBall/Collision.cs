@@ -5,10 +5,10 @@ using UnityEngine;
 public partial class GolfBall : MonoBehaviour
 {
     // Parent of all Terrain elements
-    public GameObject terrainCluster;
+    [HideInInspector] public GameObject terrainCluster;
 
     // List of TerrainTypes currently colliding with GolfBall
-    private List<TerrainType> currentlyColliding;
+    [SerializeField] private List<TerrainType> currentlyColliding;
 
     void OnCollisionEnter(Collision collision)
     {

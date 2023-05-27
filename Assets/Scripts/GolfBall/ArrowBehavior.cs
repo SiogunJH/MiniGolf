@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class GolfBall : MonoBehaviour
 {
     // Arrow reference
-    public Arrow arrow;
+    [HideInInspector] public Arrow arrow;
 
     // Disable
     void DisableArrow()
