@@ -23,17 +23,8 @@ public partial class GolfBall : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        if (golfBallRb.velocity.magnitude < 0.2f)
-        {
-            golfBallRb.velocity = new Vector3(0, 0, 0);
-            golfBallRb.angularVelocity = new Vector3(0, 0, 0);
-            golfBallStatus = BallStatus.AwaitingHit;
-            EnableArrow();
-        }
-        else
-        {
-            golfBallStatus = BallStatus.Moving;
-        }
+        if (golfBallRb.velocity.magnitude < 0.2f) Stop();
+        else golfBallStatus = BallStatus.Moving;
 
         tryingToStop = false;
     }
@@ -43,5 +34,19 @@ public partial class GolfBall : MonoBehaviour
         golfBallRb.velocity = new Vector3(0, 0, 0);
         golfBallRb.angularVelocity = new Vector3(0, 0, 0);
         transform.position = pos;
+    }
+
+    void Stop()
+    {
+        golfBallRb.velocity = new Vector3(0, 0, 0);
+        golfBallRb.angularVelocity = new Vector3(0, 0, 0);
+        golfBallStatus = BallStatus.AwaitingHit;
+        EnableArrow();
+
+        if (currentlyColliding.Contains(TerrainType.OutOfBound))
+        {
+            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
+            CourseManager.Instance.SendGameMessage(Messages.Sets.outOfBounds[Random.Range(0, Messages.Sets.outOfBounds.Count)]);
+        }
     }
 }

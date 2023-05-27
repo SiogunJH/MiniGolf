@@ -64,7 +64,6 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // --==## TEMP ##==--
-        if (Input.GetKeyDown(KeyCode.R))
-            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
+        ;
     }
 }

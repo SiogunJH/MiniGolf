@@ -8,6 +8,7 @@ TagManager:
   - Arrow
   - Power Meter
   - Golf Ball
+  - Message Box
   layers:
   - Default
   - TransparentFX

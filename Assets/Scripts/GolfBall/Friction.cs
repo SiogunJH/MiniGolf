@@ -16,6 +16,10 @@ public partial class GolfBall : MonoBehaviour
         {
             golfBallRb.drag = 0.8f;
         }
+        else if (currentlyColliding.Contains(TerrainType.OutOfBound))
+        {
+            golfBallRb.drag = 0.8f;
+        }
         else if (currentlyColliding.Contains(TerrainType.Wood))
         {
             golfBallRb.drag = 0.25f;

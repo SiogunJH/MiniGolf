@@ -25,6 +25,7 @@ public class TerrainCollision : MonoBehaviour
         if (terrainType == TerrainType.Wood) return 0.6f;
         if (terrainType == TerrainType.Plastic) return 0.5f;
         if (terrainType == TerrainType.Grass) return 0.4f;
+        if (terrainType == TerrainType.OutOfBound) return 0.4f;
         if (terrainType == TerrainType.Sand) return 0.025f;
 
 

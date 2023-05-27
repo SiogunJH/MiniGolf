@@ -6,6 +6,7 @@ public class CourseManager : MonoBehaviour
 {
     public static CourseManager Instance { get; private set; }
     public int currentLevelID;
+
     void Awake()
     {
         // If exists
@@ -24,13 +25,18 @@ public class CourseManager : MonoBehaviour
         switch (levelID)
         {
             case 1:
-                return GameObject.Find("Terrain").transform.Find("Level 1-1").transform.Find("Starting Point").transform.position;
+                return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-1").transform.Find("Starting Point").transform.position;
             case 2:
-                return GameObject.Find("Terrain").transform.Find("Level 1-2").transform.Find("Starting Point").transform.position;
+                return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-2").transform.Find("Starting Point").transform.position;
         }
 
         Debug.LogError($"Level {levelID} was not found!");
         return new Vector3();
+    }
+
+    public void SendGameMessage(string message)
+    {
+        GameObject.FindGameObjectWithTag("Message Box").GetComponent<MessageBox>().Send(message);
     }
 
     public void FirstTimeSetup()
