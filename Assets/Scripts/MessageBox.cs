@@ -49,7 +49,7 @@ public class MessageBox : MonoBehaviour
         background.color = color;
 
         CancelInvoke("ReduceOpacity");
-        InvokeRepeating("ReduceOpacity", 2, 0.01f);
+        InvokeRepeating("ReduceOpacity", 3, 0.01f);
     }
 
     public void Hide()
