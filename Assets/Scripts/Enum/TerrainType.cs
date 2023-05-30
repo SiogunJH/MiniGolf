@@ -6,5 +6,6 @@ public enum TerrainType
     Stone,
     Plastic,
     Metal,
-    OutOfBound
+    OutOfBound,
+    Hole
 }

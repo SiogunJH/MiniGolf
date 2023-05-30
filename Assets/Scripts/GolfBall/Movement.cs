@@ -4,8 +4,8 @@ using UnityEngine;
 
 public partial class GolfBall : MonoBehaviour
 {
-    // Other variables
     private bool tryingToStop;
+    private Vector3 lastPos;
 
     void Hit(float strength)
     {
@@ -38,15 +38,32 @@ public partial class GolfBall : MonoBehaviour
 
     void Stop()
     {
+        //Stop and prepare for hit
         golfBallRb.velocity = new Vector3(0, 0, 0);
         golfBallRb.angularVelocity = new Vector3(0, 0, 0);
         golfBallStatus = BallStatus.AwaitingHit;
         EnableArrow();
 
-        if (currentlyColliding.Contains(TerrainType.OutOfBound))
+        if (currentlyColliding.Contains(TerrainType.OutOfBound)) //When out of bounds
         {
-            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
+            //Send OutOfBounds message
             CourseManager.Instance.SendGameMessage(Messages.Sets.outOfBounds[Random.Range(0, Messages.Sets.outOfBounds.Count)]);
+
+            //Go one position back
+            GoTo(lastPos);
+        }
+        else if (currentlyColliding.Contains(TerrainType.Hole)) //When in the hole
+        {
+            //Go to the next level
+            CourseManager.Instance.currentLevelID++;
+            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
+        }
+        else //When still on the course
+        {
+            //Update last position
+            lastPos = transform.position;
+
+            // Update statistics
         }
     }
 }

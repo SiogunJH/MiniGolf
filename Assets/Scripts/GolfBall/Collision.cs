@@ -10,6 +10,7 @@ public partial class GolfBall : MonoBehaviour
     // List of TerrainTypes currently colliding with GolfBall
     [SerializeField] private List<TerrainType> currentlyColliding;
 
+    //On entering collision
     void OnCollisionEnter(Collision collision)
     {
         // If the collider is of Terrain type, add it's type to the list
@@ -21,9 +22,11 @@ public partial class GolfBall : MonoBehaviour
                 return;
             }
             currentlyColliding.Add(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
+            Deaccelerate();
         }
     }
 
+    //On exiting collision
     void OnCollisionExit(Collision collision)
     {
         // If the collider is of Terrain type, remove it's type from the list
@@ -31,10 +34,41 @@ public partial class GolfBall : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<TerrainCollision>() == null)
             {
-                Debug.LogError("This GameObject in Terrain cluster has no TerrainType signed to it!");
+                Debug.LogError($"{collision.gameObject.name} has no TerrainType signed to it!");
                 return;
             }
             currentlyColliding.Remove(collision.gameObject.GetComponent<TerrainCollision>().terrainType);
+            Deaccelerate();
+        }
+    }
+
+    // Pick out the strongest collider and apply its friction
+    void Deaccelerate()
+    {
+        // Apply friction
+        if (currentlyColliding.Contains(TerrainType.Sand))
+        {
+            golfBallRb.drag = 6.0f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.Grass))
+        {
+            golfBallRb.drag = 0.8f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.OutOfBound))
+        {
+            golfBallRb.drag = 0.8f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.Wood))
+        {
+            golfBallRb.drag = 0.25f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.Plastic))
+        {
+            golfBallRb.drag = 0.2f;
+        }
+        else
+        {
+            golfBallRb.drag = 0.1f;
         }
     }
 }

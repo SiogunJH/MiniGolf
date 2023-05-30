@@ -31,14 +31,15 @@ public partial class GolfBall : MonoBehaviour
         terrainCluster = GameObject.FindWithTag("Terrain");
         currentlyColliding = new();
         tryingToStop = false;
+        lastPos = CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID);
     }
 
     void Update()
     {
-        // Apply Friction
-        if (golfBallStatus == BallStatus.Moving)
+        // Check if nearly still and if so, try to stop
+        if (golfBallStatus == BallStatus.Moving && !tryingToStop && golfBallRb.velocity.magnitude < 0.25f)
         {
-            Deaccelerate();
+            StartCoroutine("TryToStop");
         }
 
         // Disable Hit Mechanic if the GolfBall started Moving from being AwaitingHit
