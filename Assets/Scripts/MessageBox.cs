@@ -1,67 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class MessageBox : MonoBehaviour
+namespace MessageBoxLib
 {
-    private TextMeshProUGUI content;
-    private Image background;
-    private const float ctOpacity = 1f;
-    private const float bgOpacity = 0.375f;
-    private const float reduceOpacitySpeed = 0.005f;
-
-    void Start()
+    public class MessageBox : MonoBehaviour
     {
-        content = transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
-        background = transform.Find("Background").transform.GetComponent<Image>();
-    }
+        private TextMeshProUGUI content;
+        private Image background;
+        private const float ctOpacity = 1f;
+        private const float bgOpacity = 0.375f;
+        private const float reduceOpacitySpeed = 0.005f;
 
-    void ReduceOpacity()
-    {
-        Color color = content.color;
-        color.a -= reduceOpacitySpeed * ctOpacity;
-        content.color = color;
+        void Start()
+        {
+            content = transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
+            background = transform.Find("Background").transform.GetComponent<Image>();
+        }
 
-        color = background.color;
-        color.a -= reduceOpacitySpeed * bgOpacity;
-        background.color = color;
+        void ReduceOpacity()
+        {
+            Color color = content.color;
+            color.a -= reduceOpacitySpeed * ctOpacity;
+            content.color = color;
 
-        if (color.a == 0) CancelInvoke("ReduceOpacity");
-    }
+            color = background.color;
+            color.a -= reduceOpacitySpeed * bgOpacity;
+            background.color = color;
 
-    void SetText(string text)
-    {
-        content.text = text;
-    }
+            if (color.a == 0) CancelInvoke("ReduceOpacity");
+        }
 
-    public void Send(string message)
-    {
-        SetText(message);
+        void SetText(string text)
+        {
+            content.text = text;
+        }
 
-        Color color = content.color;
-        color.a = ctOpacity;
-        content.color = color;
+        public void Send(string message)
+        {
+            SetText(message);
 
-        color = background.color;
-        color.a = bgOpacity;
-        background.color = color;
+            Color color = content.color;
+            color.a = ctOpacity;
+            content.color = color;
 
-        CancelInvoke("ReduceOpacity");
-        InvokeRepeating("ReduceOpacity", 3, 0.01f);
-    }
+            color = background.color;
+            color.a = bgOpacity;
+            background.color = color;
 
-    public void Hide()
-    {
-        Color color = content.color;
-        color.a = 0;
-        content.color = color;
+            CancelInvoke("ReduceOpacity");
+            InvokeRepeating("ReduceOpacity", 3, 0.01f);
+        }
 
-        color = background.color;
-        color.a = 0;
-        background.color = color;
+        public void Hide()
+        {
+            Color color = content.color;
+            color.a = 0;
+            content.color = color;
 
-        CancelInvoke("ReduceOpacity");
+            color = background.color;
+            color.a = 0;
+            background.color = color;
+
+            CancelInvoke("ReduceOpacity");
+        }
     }
 }

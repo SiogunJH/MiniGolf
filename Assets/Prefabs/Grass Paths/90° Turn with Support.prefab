@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1510608842985222272}
   - component: {fileID: 8939952640249087728}
   - component: {fileID: 6097031379525475615}
-  - component: {fileID: 2441372763667427121}
+  - component: {fileID: 2202420316981438057}
   m_Layer: 0
   m_Name: Border 2
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2441372763667427121
+--- !u!114 &2202420316981438057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151245210050478267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 2567821084828547380}
   - component: {fileID: 6075192901333642598}
   - component: {fileID: 4557326234371211738}
-  - component: {fileID: 181223519633504216}
+  - component: {fileID: 1457369966476756842}
   m_Layer: 0
   m_Name: Border 1
   m_TagString: Untagged
@@ -209,7 +209,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &181223519633504216
+--- !u!114 &1457369966476756842
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2338643257505349373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 3345797406952330097}
   - component: {fileID: 260659384940210503}
   - component: {fileID: 416078436911539312}
-  - component: {fileID: 2351977178610919959}
+  - component: {fileID: 2872017096567535379}
   m_Layer: 0
   m_Name: Support 1
   m_TagString: Untagged
@@ -320,7 +320,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2351977178610919959
+--- !u!114 &2872017096567535379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2648076755355579738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 44049431897067803}
   - component: {fileID: 5751349022064350503}
   - component: {fileID: 5540940218853728203}
-  - component: {fileID: 3250156337094786626}
+  - component: {fileID: 3983406902460703894}
   m_Layer: 0
   m_Name: Support 2
   m_TagString: Untagged
@@ -468,7 +468,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &3250156337094786626
+--- !u!114 &3983406902460703894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5492934053679734622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -493,7 +493,7 @@ GameObject:
   - component: {fileID: 6170605365955973597}
   - component: {fileID: 4261334347834821670}
   - component: {fileID: 4692316788917806725}
-  - component: {fileID: 5108150091166279017}
+  - component: {fileID: 2399635591849338157}
   m_Layer: 0
   m_Name: Path
   m_TagString: Untagged
@@ -579,7 +579,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5108150091166279017
+--- !u!114 &2399635591849338157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8395726992592106040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 0

@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TerrainLib;
+using CourseManagerLib;
 
 public partial class GolfBall : MonoBehaviour
 {
@@ -47,12 +48,12 @@ public partial class GolfBall : MonoBehaviour
         if (currentlyColliding.Contains(TerrainType.OutOfBound)) //When out of bounds
         {
             //Send OutOfBounds message
-            CourseManager.Instance.SendGameMessage(Messages.Sets.outOfBounds[Random.Range(0, Messages.Sets.outOfBounds.Count)]);
+            CourseManager.Instance.SendGameMessage(Messages.OutOfBounds.All[Random.Range(0, Messages.OutOfBounds.All.Count)]);
 
             //Go one position back
             GoTo(lastPos);
         }
-        else if (currentlyColliding.Contains(TerrainType.Hole)) //When in the hole
+        else if (currentlyColliding.Contains(TerrainType.End)) //When in the hole
         {
             //Go to the next level
             CourseManager.Instance.currentLevelID++;

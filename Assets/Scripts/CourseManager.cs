@@ -1,46 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MessageBoxLib;
 
-public class CourseManager : MonoBehaviour
+namespace CourseManagerLib
 {
-    public static CourseManager Instance { get; private set; }
-    public int currentLevelID;
-
-    void Awake()
+    public class CourseManager : MonoBehaviour
     {
-        // If exists
-        if (Instance != null)
+        public static CourseManager Instance { get; private set; }
+        public int currentLevelID;
+
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
+            // If exists
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            FirstTimeSetup();
+            Instance = this;
         }
 
-        FirstTimeSetup();
-        Instance = this;
-    }
-
-    public Vector3 GetStartingPoint(int levelID)
-    {
-        switch (levelID)
+        public Vector3 GetStartingPoint(int levelID)
         {
-            case 1:
-                return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-1").transform.Find("Starting Point").transform.position;
-            case 2:
-                return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-2").transform.Find("Starting Point").transform.position;
+            switch (levelID)
+            {
+                case 1:
+                    return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-1").transform.Find("Starting Point").transform.position;
+                case 2:
+                    return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-2").transform.Find("Starting Point").transform.position;
+            }
+
+            Debug.LogError($"Level {levelID} was not found!");
+            return new Vector3();
         }
 
-        Debug.LogError($"Level {levelID} was not found!");
-        return new Vector3();
-    }
+        public void SendGameMessage(string message)
+        {
+            GameObject.FindGameObjectWithTag("Message Box").GetComponent<MessageBox>().Send(message);
+        }
 
-    public void SendGameMessage(string message)
-    {
-        GameObject.FindGameObjectWithTag("Message Box").GetComponent<MessageBox>().Send(message);
-    }
-
-    public void FirstTimeSetup()
-    {
-        Physics.gravity = new Vector3(0, -25, 0);
+        public void FirstTimeSetup()
+        {
+            Physics.gravity = new Vector3(0, -25, 0);
+        }
     }
 }

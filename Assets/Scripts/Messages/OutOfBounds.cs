@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Messages
 {
-    public static class Sets
+    public static class OutOfBounds
     {
-        public static List<string> outOfBounds = new List<string>
+        public static List<string> All = new List<string>
         {
             //Basic
             "Out of bounds! Stay on track!",

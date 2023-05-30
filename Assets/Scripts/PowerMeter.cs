@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerMeter : MonoBehaviour
+namespace PowerMeterLib
 {
-    public Slider slider;
-    public float sliderValue
+    public class PowerMeter : MonoBehaviour
     {
-        get => slider.value;
-        set => slider.value = value;
-    }
+        public Slider slider;
+        public float sliderValue
+        {
+            get => slider.value;
+            set => slider.value = value;
+        }
 
-    void Start()
-    {
-        slider = GetComponent<Slider>();
-    }
+        void Start()
+        {
+            slider = GetComponent<Slider>();
+        }
 
-    public void ChangeValue(float delta) => slider.value += delta;
+        public void ChangeValue(float delta) => slider.value += delta;
+    }
 }

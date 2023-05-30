@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151245210050478267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2338643257505349373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 1
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8395726992592106040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2404eab925cfad84883bc36fee8a7b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2241b49050908a149a4187719a8596e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   terrainType: 0

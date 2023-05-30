@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TerrainLib;
 
 public partial class GolfBall : MonoBehaviour
 {
@@ -46,7 +46,11 @@ public partial class GolfBall : MonoBehaviour
     void Deaccelerate()
     {
         // Apply friction
-        if (currentlyColliding.Contains(TerrainType.Sand))
+        if (currentlyColliding.Contains(TerrainType.End))
+        {
+            golfBallRb.drag = 20.0f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.Sand))
         {
             golfBallRb.drag = 6.0f;
         }
