@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UtilityLib;
 
 namespace ArrowLib
 {
@@ -10,14 +11,9 @@ namespace ArrowLib
         // References
         private GameObject golfBall;
 
-        // Rotation
-        [HideInInspector] public float rotY = 0;
-        [HideInInspector] public float rotX = 0;
-
-        // Position
-        private float posX;
-        private float posY;
-        private float posZ;
+        // Variables
+        [HideInInspector] public Quaternion rot = new();
+        [HideInInspector] public Vector3 pos = new();
         private float currentBounce = 0;
         private const float constBounce = 0.2f;
         private const float distance = 1f;
@@ -28,29 +24,23 @@ namespace ArrowLib
             golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
         }
 
-        void Update()
-        {
-            if (Input.GetKey(KeyCode.A)) rotY -= 90 * Time.deltaTime;
-            if (Input.GetKey(KeyCode.D)) rotY += 90 * Time.deltaTime;
-            if (Input.GetKey(KeyCode.W)) rotX += 60 * Time.deltaTime;
-            if (Input.GetKey(KeyCode.S)) rotX -= 60 * Time.deltaTime;
-
-            rotY.RestrictBetween(0, 360, true);
-            rotX.RestrictBetween(0, 70, false);
-
-            currentBounce = (currentBounce + 200 * Time.deltaTime) % 360;
-        }
-
         void LateUpdate()
         {
-            transform.rotation = Quaternion.Euler(-rotX, rotY, 0);
+            //UPDATE ROTATION
+            if (Input.GetKey(KeyCode.A)) rot.y -= 90 * Time.deltaTime;
+            if (Input.GetKey(KeyCode.D)) rot.y += 90 * Time.deltaTime;
+            if (Input.GetKey(KeyCode.W)) rot.x += 60 * Time.deltaTime;
+            if (Input.GetKey(KeyCode.S)) rot.x -= 60 * Time.deltaTime;
+            rot.y.RestrictBetween(0, 360, true);
+            rot.x.RestrictBetween(0, 70, false);
+            transform.rotation = Quaternion.Euler(-rot.x, rot.y, 0);
 
-            // Golf Ball Position + (Bounce Offset) * Rotation Offset
-            posX = golfBall.transform.position.x + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rotX.ToRadians()) * Mathf.Sin(rotY.ToRadians());
-            posZ = golfBall.transform.position.z + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rotX.ToRadians()) * Mathf.Cos(rotY.ToRadians());
-            posY = golfBall.transform.position.y + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Sin(rotX.ToRadians());
-
-            transform.position = new Vector3(posX, posY, posZ);
+            //UPDATE POSITION
+            currentBounce = (currentBounce + 200 * Time.deltaTime) % 360;
+            pos.x = golfBall.transform.position.x + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rot.x.ToRadians()) * Mathf.Sin(rot.y.ToRadians());
+            pos.z = golfBall.transform.position.z + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Cos(rot.x.ToRadians()) * Mathf.Cos(rot.y.ToRadians());
+            pos.y = golfBall.transform.position.y + (distance + constBounce * Mathf.Sin(currentBounce.ToRadians())) * Mathf.Sin(rot.x.ToRadians());
+            transform.position = pos;
         }
     }
 }

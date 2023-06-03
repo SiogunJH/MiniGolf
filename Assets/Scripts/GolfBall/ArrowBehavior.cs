@@ -4,7 +4,7 @@ using ArrowLib;
 public partial class GolfBall : MonoBehaviour
 {
     // Arrow reference
-    [HideInInspector] public Arrow arrow;
+    private Arrow arrow;
 
     // Disable
     void DisableArrow()

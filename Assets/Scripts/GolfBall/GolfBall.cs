@@ -6,12 +6,12 @@ using CourseManagerLib;
 public partial class GolfBall : MonoBehaviour
 {
     // Golf Ball refs and vars
-    [HideInInspector] public BoxCollider golfBallCol;
-    [HideInInspector] public Rigidbody golfBallRb;
+    private BoxCollider golfBallCol;
+    private Rigidbody golfBallRb;
     private BallStatus golfBallStatus;
 
     // Power Meter refs and vars
-    [HideInInspector] public PowerMeter powerMeter;
+    private PowerMeter powerMeter;
     private float powerMeterSpeed;
 
     void Start()
@@ -52,11 +52,11 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Hit Mechanic
-        if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyCode.Space))
+        if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
         }
-        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyUp(KeyCode.Space))
+        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyUp(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             Hit(powerMeter.sliderValue);
 
@@ -64,8 +64,5 @@ public partial class GolfBall : MonoBehaviour
             golfBallStatus = BallStatus.Moving;
             DisableArrow();
         }
-
-        // --==## TEMP ##==--
-        ;
     }
 }

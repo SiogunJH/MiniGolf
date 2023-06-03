@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TerrainLib;
 using CourseManagerLib;
+using UtilityLib;
 
 public partial class GolfBall : MonoBehaviour
 {
@@ -10,9 +11,9 @@ public partial class GolfBall : MonoBehaviour
 
     void Hit(float strength)
     {
-        float forceX = strength * (1 - arrow.rotX / 90) * Mathf.Sin(arrow.rotY.ToRadians());
-        float forceY = strength * (0 + arrow.rotX / 90);
-        float forceZ = strength * (1 - arrow.rotX / 90) * Mathf.Cos(arrow.rotY.ToRadians());
+        float forceX = strength * (1 - arrow.rot.x / 90) * Mathf.Sin(arrow.rot.y.ToRadians());
+        float forceY = strength * (0 + arrow.rot.x / 90);
+        float forceZ = strength * (1 - arrow.rot.x / 90) * Mathf.Cos(arrow.rot.y.ToRadians());
 
         golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
         golfBallRb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);

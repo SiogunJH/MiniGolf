@@ -1,23 +1,18 @@
 using UnityEngine;
+using UtilityLib;
 
 namespace CameraLib
 {
     public class Camera : MonoBehaviour
     {
-        // Other Variables
+        // References
         private GameObject golfBall;
 
-        // Rotation
-        [SerializeField] private float rotX = 50;
-        [SerializeField] private float rotY = 0;
-        [SerializeField] private float rotZ = 0;
-
-        // Position
-        [SerializeField] private float posX;
-        [SerializeField] private float posY;
-        [SerializeField] private float posZ;
-        [SerializeField] private float radius = 10;
-        [HideInInspector] private float newRadius;
+        // Variables
+        private Quaternion rot = new(50, 0, 0, 0);
+        private Vector3 pos = new();
+        private float radius = 10;
+        private float newRadius;
 
         void Start()
         {
@@ -32,21 +27,18 @@ namespace CameraLib
         void LateUpdate()
         {
             // UPDATE ROTATION
-            rotY = (rotY + Input.GetAxis("Mouse X"));
-            rotY.RestrictBetween(0, 360, true);
-            rotX = (rotX - Input.GetAxis("Mouse Y"));
-            rotX.RestrictBetween(5, 90, false);
+            rot.y = (rot.y + Input.GetAxis("Mouse X"));
+            rot.y.RestrictBetween(0, 360, true);
+            rot.x = (rot.x - Input.GetAxis("Mouse Y"));
+            rot.x.RestrictBetween(5, 90, false);
+            transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
 
-            transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
-
-            // UPDATE POSITION based on rotation
+            // UPDATE POSITION
             newRadius = radius * Mathf.Cos((transform.eulerAngles.x).ToRadians());
-
-            posX = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y).ToRadians());
-            posZ = golfBall.transform.position.z + newRadius * Mathf.Cos((transform.eulerAngles.y + 180).ToRadians());
-            posY = golfBall.transform.position.y + radius * Mathf.Sin((transform.eulerAngles.x).ToRadians());
-
-            transform.position = new Vector3(posX, posY, posZ);
+            pos.x = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y).ToRadians());
+            pos.z = golfBall.transform.position.z + newRadius * Mathf.Cos((transform.eulerAngles.y + 180).ToRadians());
+            pos.y = golfBall.transform.position.y + radius * Mathf.Sin((transform.eulerAngles.x).ToRadians());
+            transform.position = pos;
         }
     }
 }
