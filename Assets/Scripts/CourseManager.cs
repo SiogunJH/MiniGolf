@@ -1,27 +1,32 @@
 using UnityEngine;
 using MessageBoxLib;
+using UnityEngine.SceneManagement;
 
 namespace CourseManagerLib
 {
     public class CourseManager : MonoBehaviour
     {
-        public static CourseManager Instance { get; private set; }
-        public int currentLevelID;
+        private static CourseManager Instance { get; set; }
+        public static int currentLevelID;
+        public static int currentSectionID;
 
         void Awake()
         {
             // If exists
-            if (Instance != null)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            FirstTimeSetup();
+            // One time functions
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+        private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+        private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
-        public Vector3 GetStartingPoint(int levelID)
+        public static Vector3 GetStartingPoint(int levelID)
         {
             switch (levelID)
             {
@@ -35,13 +40,17 @@ namespace CourseManagerLib
             return new Vector3();
         }
 
-        public void SendGameMessage(string message)
+        public static void SendGameMessage(string message)
         {
             GameObject.FindGameObjectWithTag("Message Box").GetComponent<MessageBox>().Send(message);
         }
 
-        public void FirstTimeSetup()
+        public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            // If in main menu, do nothing
+            if (SceneManager.GetActiveScene().name == "Main Menu") return;
+
+            // Set physics
             Physics.gravity = new Vector3(0, -25, 0);
         }
     }

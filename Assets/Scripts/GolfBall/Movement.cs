@@ -49,7 +49,7 @@ public partial class GolfBall : MonoBehaviour
         if (currentlyColliding.Contains(TerrainType.OutOfBound)) //When out of bounds
         {
             //Send OutOfBounds message
-            CourseManager.Instance.SendGameMessage(Messages.OutOfBounds.All[Random.Range(0, Messages.OutOfBounds.All.Count)]);
+            CourseManager.SendGameMessage(Messages.OutOfBounds.All[Random.Range(0, Messages.OutOfBounds.All.Count)]);
 
             //Go one position back
             GoTo(lastPos);
@@ -57,8 +57,8 @@ public partial class GolfBall : MonoBehaviour
         else if (currentlyColliding.Contains(TerrainType.End)) //When in the hole
         {
             //Go to the next level
-            CourseManager.Instance.currentLevelID++;
-            GoTo(CourseManager.Instance.GetStartingPoint(CourseManager.Instance.currentLevelID));
+            CourseManager.currentLevelID++;
+            GoTo(CourseManager.GetStartingPoint(CourseManager.currentLevelID));
         }
         else //When still on the course
         {

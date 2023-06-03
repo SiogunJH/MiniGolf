@@ -9,6 +9,7 @@ TagManager:
   - Power Meter
   - Golf Ball
   - Message Box
+  - Main Menu
   layers:
   - Default
   - TransparentFX

@@ -12,12 +12,14 @@ public class KeyBindsSettings : MonoBehaviour
 
     private void Awake()
     {
+        // If exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
+        // One time funtions
         Instance = this;
         DontDestroyOnLoad(gameObject);
         DefaultKeyBinds();
