@@ -6,6 +6,10 @@ namespace CourseManagerLib
 {
     public class CourseManager : MonoBehaviour
     {
+        // References
+        [SerializeField] private static MessageBox messageBox;
+
+        // Variables
         private static CourseManager Instance { get; set; }
         public static int currentLevelID;
         public static int currentSectionID;
@@ -42,16 +46,25 @@ namespace CourseManagerLib
 
         public static void SendGameMessage(string message)
         {
-            GameObject.FindGameObjectWithTag("Message Box").GetComponent<MessageBox>().Send(message);
+            messageBox.gameObject.SetActive(true);
+            messageBox.Send(message);
         }
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            // If in main menu, do nothing
+            // If main menu
             if (SceneManager.GetActiveScene().name == "Main Menu") return;
 
-            // Set physics
-            Physics.gravity = new Vector3(0, -25, 0);
+            // If course
+            if (SceneManager.GetActiveScene().name == "Course")
+            {
+                Physics.gravity = new Vector3(0, -25, 0);
+
+                //Prepare MessageBox
+                messageBox = GameObject.FindWithTag("Message Box").gameObject.GetComponent<MessageBox>();
+                messageBox.SetReferences();
+                messageBox.gameObject.SetActive(false);
+            }
         }
     }
 }

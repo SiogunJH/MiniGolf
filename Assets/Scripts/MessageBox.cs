@@ -12,7 +12,7 @@ namespace MessageBoxLib
         private const float bgOpacity = 0.375f;
         private const float reduceOpacitySpeed = 0.005f;
 
-        void Start()
+        public void SetReferences()
         {
             content = transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
             background = transform.Find("Background").transform.GetComponent<Image>();
@@ -28,7 +28,11 @@ namespace MessageBoxLib
             color.a -= reduceOpacitySpeed * bgOpacity;
             background.color = color;
 
-            if (color.a == 0) CancelInvoke("ReduceOpacity");
+            if (color.a <= 0)
+            {
+                gameObject.SetActive(false);
+                CancelInvoke("ReduceOpacity");
+            }
         }
 
         void SetText(string text)
