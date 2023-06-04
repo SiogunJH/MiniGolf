@@ -36,12 +36,16 @@ namespace CourseManagerLib
             // If course
             if (SceneManager.GetActiveScene().name == "Course")
             {
+                // Set Physics
                 Physics.gravity = new Vector3(0, -25, 0);
 
-                //Prepare MessageBox
+                // Prepare MessageBox
                 messageBox = GameObject.FindWithTag("Message Box").gameObject.GetComponent<MessageBox>();
                 messageBox.SetReferences();
                 messageBox.gameObject.SetActive(false);
+
+                // Prepare GolfBall
+                golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();
             }
         }
     }

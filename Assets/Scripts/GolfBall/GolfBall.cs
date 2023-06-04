@@ -6,9 +6,9 @@ using CourseManagerLib;
 public partial class GolfBall : MonoBehaviour
 {
     // Golf Ball refs and vars
-    private BoxCollider golfBallCol;
-    private Rigidbody golfBallRb;
-    private BallStatus golfBallStatus;
+    public BoxCollider Col;
+    public Rigidbody Rb;
+    public BallStatus Status;
 
     // Power Meter refs and vars
     private PowerMeter powerMeter;
@@ -17,9 +17,9 @@ public partial class GolfBall : MonoBehaviour
     void Start()
     {
         // Define GolfBall refs and vars
-        golfBallCol = GetComponent<BoxCollider>();
-        golfBallRb = GetComponent<Rigidbody>();
-        golfBallStatus = BallStatus.AwaitingHit;
+        Col = GetComponent<BoxCollider>();
+        Rb = GetComponent<Rigidbody>();
+        Status = BallStatus.AwaitingHit;
 
         // Define Arrow ref and vars
         arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<Arrow>();
@@ -36,36 +36,36 @@ public partial class GolfBall : MonoBehaviour
 
         // Go to position defined by CourseManager
         transform.position = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
-        golfBallStatus = BallStatus.AwaitingHit;
+        Status = BallStatus.AwaitingHit;
     }
 
     void Update()
     {
         // Check if nearly still and if so, try to stop
-        if (golfBallStatus == BallStatus.Moving && !tryingToStop && golfBallRb.velocity.magnitude < 0.25f)
+        if (Status == BallStatus.Moving && !tryingToStop && Rb.velocity.magnitude < 0.25f)
         {
             StartCoroutine("TryToStop");
         }
 
         // Disable Hit Mechanic if the GolfBall started Moving from being AwaitingHit
-        if (golfBallStatus == BallStatus.AwaitingHit && golfBallRb.velocity.magnitude > 0.1f)
+        if (Status == BallStatus.AwaitingHit && Rb.velocity.magnitude > 0.1f)
         {
             powerMeter.sliderValue = 0;
-            golfBallStatus = BallStatus.Moving;
+            Status = BallStatus.Moving;
             DisableArrow();
         }
 
         // Hit Mechanic
-        if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKey(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
+        if (Status == BallStatus.AwaitingHit && Input.GetKey(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
         }
-        else if (golfBallStatus == BallStatus.AwaitingHit && Input.GetKeyUp(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
+        else if (Status == BallStatus.AwaitingHit && Input.GetKeyUp(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             Hit(powerMeter.sliderValue);
 
             powerMeter.sliderValue = 0;
-            golfBallStatus = BallStatus.Moving;
+            Status = BallStatus.Moving;
             DisableArrow();
         }
     }

@@ -48,31 +48,31 @@ public partial class GolfBall : MonoBehaviour
         // Apply friction
         if (currentlyColliding.Contains(TerrainType.End))
         {
-            golfBallRb.drag = 20.0f;
+            Rb.drag = 20.0f;
         }
         else if (currentlyColliding.Contains(TerrainType.Sand))
         {
-            golfBallRb.drag = 6.0f;
+            Rb.drag = 6.0f;
         }
         else if (currentlyColliding.Contains(TerrainType.Grass))
         {
-            golfBallRb.drag = 0.8f;
+            Rb.drag = 0.8f;
         }
         else if (currentlyColliding.Contains(TerrainType.OutOfBound))
         {
-            golfBallRb.drag = 0.8f;
+            Rb.drag = 0.8f;
         }
         else if (currentlyColliding.Contains(TerrainType.Wood))
         {
-            golfBallRb.drag = 0.25f;
+            Rb.drag = 0.25f;
         }
         else if (currentlyColliding.Contains(TerrainType.Plastic))
         {
-            golfBallRb.drag = 0.2f;
+            Rb.drag = 0.2f;
         }
         else
         {
-            golfBallRb.drag = 0.1f;
+            Rb.drag = 0.1f;
         }
     }
 }

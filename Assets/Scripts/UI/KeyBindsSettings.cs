@@ -30,5 +30,6 @@ public class KeyBindsSettings : MonoBehaviour
     {
         KeyBinds.Clear();
         KeyBinds.Add(KeyAction.LoadPowerMeter, KeyCode.Space);
+        KeyBinds.Add(KeyAction.PauseLevel, KeyCode.Escape);
     }
 }

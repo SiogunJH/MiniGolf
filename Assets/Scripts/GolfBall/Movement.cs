@@ -15,8 +15,8 @@ public partial class GolfBall : MonoBehaviour
         float forceY = strength * (0 + arrow.rot.x / 90);
         float forceZ = strength * (1 - arrow.rot.x / 90) * Mathf.Cos(arrow.rot.y.ToRadians());
 
-        golfBallRb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
-        golfBallRb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);
+        Rb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
+        Rb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);
     }
 
     IEnumerator TryToStop()
@@ -25,25 +25,25 @@ public partial class GolfBall : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        if (golfBallRb.velocity.magnitude < 0.2f) Stop();
-        else golfBallStatus = BallStatus.Moving;
+        if (Rb.velocity.magnitude < 0.2f) Stop();
+        else Status = BallStatus.Moving;
 
         tryingToStop = false;
     }
 
     void GoTo(Vector3 pos)
     {
-        golfBallRb.velocity = new Vector3(0, 0, 0);
-        golfBallRb.angularVelocity = new Vector3(0, 0, 0);
+        Rb.velocity = new Vector3(0, 0, 0);
+        Rb.angularVelocity = new Vector3(0, 0, 0);
         transform.position = pos;
     }
 
     void Stop()
     {
         //Stop and prepare for hit
-        golfBallRb.velocity = new Vector3(0, 0, 0);
-        golfBallRb.angularVelocity = new Vector3(0, 0, 0);
-        golfBallStatus = BallStatus.AwaitingHit;
+        Rb.velocity = new Vector3(0, 0, 0);
+        Rb.angularVelocity = new Vector3(0, 0, 0);
+        Status = BallStatus.AwaitingHit;
         EnableArrow();
 
         if (currentlyColliding.Contains(TerrainType.OutOfBound)) //When out of bounds
