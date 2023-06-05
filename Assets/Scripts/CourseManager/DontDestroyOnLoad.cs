@@ -44,8 +44,16 @@ namespace CourseManagerLib
                 messageBox.SetReferences();
                 messageBox.gameObject.SetActive(false);
 
+                // Prepare Pause Menu
+                pauseMenu = GameObject.FindWithTag("Pause Menu");
+                pauseMenu.gameObject.SetActive(false);
+
                 // Prepare GolfBall
                 golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();
+
+                // Cursor behavior
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
     }

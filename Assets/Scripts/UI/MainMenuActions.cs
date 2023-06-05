@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using CourseManagerLib;
 
-public class Actions : MonoBehaviour
+public class MainMenuActions : MonoBehaviour
 {
     [SerializeField] private GameObject MainMenu;
     [SerializeField] private GameObject SectionSelection;

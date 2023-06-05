@@ -10,6 +10,8 @@ TagManager:
   - Golf Ball
   - Message Box
   - Main Menu
+  - Section Selection
+  - Pause Menu
   layers:
   - Default
   - TransparentFX

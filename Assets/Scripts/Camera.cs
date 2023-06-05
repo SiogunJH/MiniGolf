@@ -6,7 +6,7 @@ namespace CameraLib
     public class Camera : MonoBehaviour
     {
         // References
-        private GameObject golfBall;
+        private GolfBall golfBall;
 
         // Variables
         private Quaternion rot = new(50, 0, 0, 0);
@@ -17,15 +17,13 @@ namespace CameraLib
         void Start()
         {
             // Set variables
-            golfBall = GameObject.FindGameObjectWithTag("Golf Ball");
-
-            // Cursor behavior
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();
         }
 
         void LateUpdate()
         {
+            if (golfBall.Status == BallStatus.Disabled) return;
+
             // UPDATE ROTATION
             rot.y = (rot.y + Input.GetAxis("Mouse X"));
             rot.y.RestrictBetween(0, 360, true);
