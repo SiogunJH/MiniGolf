@@ -20,11 +20,11 @@ public class CourseActions : MonoBehaviour
 
     public void Restart()
     {
-        Debug.Log("Restart Button");
+        CourseManager.RestartLevel();
     }
 
     public static void ClosePauseMenu()
     {
-        CourseManager.PauseLevel();
+        CourseManager.UnpauseLevel();
     }
 }

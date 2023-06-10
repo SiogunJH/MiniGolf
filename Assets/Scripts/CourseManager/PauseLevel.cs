@@ -17,45 +17,51 @@ namespace CourseManagerLib
 
         // Variables
         private static bool isPaused = false;
-        public static void PauseLevel()
+
+        public static void TogglePauseLevel()
         {
-            // Change pause status
+            // Switch state
             isPaused = !isPaused;
 
-            if (isPaused) // On Pause
-            {
-                // Golf Ball
-                golfBallVelocity = golfBall.Rb.velocity;
-                golfBallAngularVelocity = golfBall.Rb.angularVelocity;
-                golfBallStatus = golfBall.Status;
-                golfBall.Rb.useGravity = false;
-                golfBall.Rb.velocity = Vector3.zero;
-                golfBall.Rb.angularVelocity = Vector3.zero;
-                golfBall.Status = BallStatus.Disabled;
-
-                // Cursor
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-
-                // Pause Menu
-                pauseMenu.gameObject.SetActive(true);
-            }
-            else // On Unpause
-            {
-                // Golf Ball
-                golfBall.Rb.useGravity = true;
-                golfBall.Rb.velocity = golfBallVelocity;
-                golfBall.Rb.angularVelocity = golfBallAngularVelocity;
-                golfBall.Status = golfBallStatus;
-
-                // Cursor
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                // Pause Menu
-                pauseMenu.gameObject.SetActive(false);
-            }
+            // Act accordingly
+            if (isPaused) PauseLevel();
+            else UnpauseLevel();
         }
 
+        public static void UnpauseLevel()
+        {
+            // Golf Ball
+            golfBall.Rb.useGravity = true;
+            golfBall.Rb.velocity = golfBallVelocity;
+            golfBall.Rb.angularVelocity = golfBallAngularVelocity;
+            golfBall.Status = golfBallStatus;
+
+            // Cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            // Pause Menu
+            pauseMenu.gameObject.SetActive(false);
+            isPaused = false;
+        }
+        public static void PauseLevel()
+        {
+            // Golf Ball
+            golfBall.Rb.useGravity = false;
+
+            golfBallVelocity = golfBall.StopMovement();
+            golfBallAngularVelocity = golfBall.StopRotation();
+
+            golfBallStatus = golfBall.Status;
+            golfBall.Status = BallStatus.Disabled;
+
+            // Cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            // Pause Menu
+            pauseMenu.gameObject.SetActive(true);
+            isPaused = true;
+        }
     }
 }

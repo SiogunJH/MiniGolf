@@ -47,6 +47,7 @@ namespace CourseManagerLib
                 // Prepare Pause Menu
                 pauseMenu = GameObject.FindWithTag("Pause Menu");
                 pauseMenu.gameObject.SetActive(false);
+                isPaused = false;
 
                 // Prepare GolfBall
                 golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();

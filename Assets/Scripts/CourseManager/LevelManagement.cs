@@ -6,8 +6,8 @@ namespace CourseManagerLib
 {
     public partial class CourseManager : MonoBehaviour
     {
-        public static int currentLevelID;
-        public static int currentSectionID;
+        public static int currentLevelID = 1;
+        public static int currentSectionID = 1;
         public static Vector3 GetStartingPoint(int levelID)
         {
             switch (levelID)
@@ -20,6 +20,18 @@ namespace CourseManagerLib
 
             Debug.LogError($"Level {levelID} was not found!");
             return new Vector3();
+        }
+        public static void RestartLevel()
+        {
+            //Resume gameplay
+            UnpauseLevel();
+
+            //Stop
+            golfBall.StopMovement();
+            golfBall.StopRotation();
+
+            //Set position
+            golfBall.transform.position = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
         }
     }
 }

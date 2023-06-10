@@ -56,11 +56,11 @@ public partial class GolfBall : MonoBehaviour
         }
 
         // Hit Mechanic
-        if (Status == BallStatus.AwaitingHit && Input.GetKey(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
+        if (Status == BallStatus.AwaitingHit && Input.GetKey(KeyBindsManager.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             powerMeter.sliderValue = powerMeter.sliderValue + Time.deltaTime * powerMeterSpeed;
         }
-        else if (Status == BallStatus.AwaitingHit && Input.GetKeyUp(KeyBindsSettings.KeyBinds[KeyAction.LoadPowerMeter]))
+        else if (Status == BallStatus.AwaitingHit && Input.GetKeyUp(KeyBindsManager.KeyBinds[KeyAction.LoadPowerMeter]))
         {
             Hit(powerMeter.sliderValue);
 

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyBindsSettings : MonoBehaviour
+public class KeyBindsManager : MonoBehaviour
 {
     // Class variables and references
     public static Dictionary<KeyAction, KeyCode> KeyBinds = new();
 
     // Make KeyBindsSetting accessible through different scenes
-    private static KeyBindsSettings Instance;
+    private static KeyBindsManager Instance;
 
     private void Awake()
     {

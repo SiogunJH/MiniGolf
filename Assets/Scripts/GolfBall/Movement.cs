@@ -25,8 +25,16 @@ public partial class GolfBall : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        if (Rb.velocity.magnitude < 0.2f) Stop();
-        else Status = BallStatus.Moving;
+        if (Rb.velocity.magnitude < 0.2f && Status != BallStatus.Disabled)
+        {
+            StopMovement();
+            StopRotation();
+            PrepareForHit();
+        }
+        else if (Status != BallStatus.Disabled)
+        {
+            Status = BallStatus.Moving;
+        }
 
         tryingToStop = false;
     }
@@ -38,11 +46,23 @@ public partial class GolfBall : MonoBehaviour
         transform.position = pos;
     }
 
-    void Stop()
+    public Vector3 StopMovement()
+    {
+        var velocity = Rb.velocity;
+        Rb.velocity = Vector3.zero;
+        return velocity;
+    }
+
+    public Vector3 StopRotation()
+    {
+        var angularVelocity = Rb.angularVelocity;
+        Rb.angularVelocity = Vector3.zero;
+        return angularVelocity;
+    }
+
+    void PrepareForHit()
     {
         //Stop and prepare for hit
-        Rb.velocity = new Vector3(0, 0, 0);
-        Rb.angularVelocity = new Vector3(0, 0, 0);
         Status = BallStatus.AwaitingHit;
         EnableArrow();
 
@@ -53,19 +73,28 @@ public partial class GolfBall : MonoBehaviour
 
             //Go one position back
             GoTo(lastPos);
+
+            //Allow hit
+            Status = BallStatus.AwaitingHit;
+            EnableArrow();
         }
         else if (currentlyColliding.Contains(TerrainType.End)) //When in the hole
         {
             //Go to the next level
             CourseManager.currentLevelID++;
             GoTo(CourseManager.GetStartingPoint(CourseManager.currentLevelID));
+
+            //Set last position as current
+            lastPos = transform.position;
         }
         else //When still on the course
         {
             //Update last position
             lastPos = transform.position;
 
-            // Update statistics
+            //Allow hit
+            Status = BallStatus.AwaitingHit;
+            EnableArrow();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace CourseManagerLib
     {
         void Update()
         {
-            if (Input.GetKeyDown(KeyBindsSettings.KeyBinds[KeyAction.PauseLevel]))
+            if (Input.GetKeyDown(KeyBindsManager.KeyBinds[KeyAction.PauseLevel]))
             {
-                PauseLevel();
+                TogglePauseLevel();
             }
         }
 
