@@ -32,6 +32,10 @@ namespace CourseManagerLib
 
             //Set position
             golfBall.transform.position = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
+
+            //Prepare for hit
+            golfBall.Status = BallStatus.AwaitingHit;
+            golfBall.EnableArrow();
         }
     }
 }

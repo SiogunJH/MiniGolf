@@ -13,7 +13,7 @@ public partial class GolfBall : MonoBehaviour
     }
 
     // Enable
-    void EnableArrow()
+    public void EnableArrow()
     {
         arrow.gameObject.SetActive(true);
     }
