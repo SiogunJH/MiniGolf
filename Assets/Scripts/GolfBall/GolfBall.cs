@@ -32,10 +32,10 @@ public partial class GolfBall : MonoBehaviour
         terrainCluster = GameObject.FindWithTag("Terrain");
         currentlyColliding = new();
         tryingToStop = false;
-        lastPos = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
+        lastPos = CourseManager.GetStartingPoint();
 
         // Go to position defined by CourseManager
-        transform.position = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
+        transform.position = CourseManager.GetStartingPoint();
         Status = BallStatus.AwaitingHit;
     }
 

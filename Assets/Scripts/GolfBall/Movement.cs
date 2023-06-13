@@ -82,7 +82,7 @@ public partial class GolfBall : MonoBehaviour
         {
             //Go to the next level
             CourseManager.currentLevelID++;
-            GoTo(CourseManager.GetStartingPoint(CourseManager.currentLevelID));
+            GoTo(CourseManager.GetStartingPoint());
 
             //Set last position as current
             lastPos = transform.position;

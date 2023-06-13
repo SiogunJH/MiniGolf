@@ -8,18 +8,20 @@ namespace CourseManagerLib
     {
         public static int currentLevelID = 1;
         public static int currentSectionID = 1;
-        public static Vector3 GetStartingPoint(int levelID)
+        public static Vector3 GetStartingPoint()
         {
-            switch (levelID)
+            // Find level object
+            Transform levelObject = GameObject.FindGameObjectWithTag("Terrain").transform.Find($"Level {currentSectionID}-{currentLevelID}");
+
+            //Check if the levelObject exist
+            if (levelObject is null)
             {
-                case 1:
-                    return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-1").transform.Find("Starting Point").transform.position;
-                case 2:
-                    return GameObject.FindGameObjectWithTag("Terrain").transform.Find("Level 1-2").transform.Find("Starting Point").transform.position;
+                Debug.LogError($"Level {currentSectionID}-{currentLevelID} was not found!");
+                return new Vector3();
             }
 
-            Debug.LogError($"Level {levelID} was not found!");
-            return new Vector3();
+            //Return levelObject's starting position
+            return levelObject.transform.Find("Starting Point").transform.position;
         }
         public static void RestartLevel()
         {
@@ -31,7 +33,7 @@ namespace CourseManagerLib
             golfBall.StopRotation();
 
             //Set position
-            golfBall.transform.position = CourseManager.GetStartingPoint(CourseManager.currentLevelID);
+            golfBall.transform.position = CourseManager.GetStartingPoint();
 
             //Prepare for hit
             golfBall.Status = BallStatus.AwaitingHit;
