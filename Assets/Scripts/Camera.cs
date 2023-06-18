@@ -1,3 +1,4 @@
+using CourseManagerLib;
 using UnityEngine;
 using UtilityLib;
 
@@ -12,7 +13,7 @@ namespace CameraLib
         private Quaternion rot = new(50, 0, 0, 0);
         private Vector3 pos = new();
         private float radius = 10;
-        private float newRadius;
+        private float zoomSpeed = 10;
 
         void Start()
         {
@@ -20,9 +21,45 @@ namespace CameraLib
             golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();
         }
 
+        void Update()
+        {
+            if (CourseManager.isPaused) return;
+
+            //Zoom In
+            if (Input.GetKey(KeyBindsManager.KeyBinds[KeyAction.ZoomIn]))
+            {
+                radius -= Time.deltaTime * zoomSpeed;
+                radius.RestrictBetween(2, 50);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                radius -= Time.deltaTime * zoomSpeed * 30;
+                radius.RestrictBetween(2, 50);
+            }
+
+            //Zoom Out
+            if (Input.GetKey(KeyBindsManager.KeyBinds[KeyAction.ZoomOut]))
+            {
+                radius += Time.deltaTime * zoomSpeed;
+                radius.RestrictBetween(2, 50);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                radius += Time.deltaTime * zoomSpeed * 30;
+                radius.RestrictBetween(2, 50);
+            }
+
+            //Zoom Reset
+            if (Input.GetKey(KeyBindsManager.KeyBinds[KeyAction.ZoomReset]))
+            {
+                radius = 10;
+            }
+
+        }
+
         void LateUpdate()
         {
-            if (golfBall.Status == BallStatus.Disabled) return;
+            if (CourseManager.isPaused) return;
 
             // UPDATE ROTATION
             rot.y = (rot.y + Input.GetAxis("Mouse X"));
@@ -32,9 +69,8 @@ namespace CameraLib
             transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
 
             // UPDATE POSITION
-            newRadius = radius * Mathf.Cos((transform.eulerAngles.x).ToRadians());
-            pos.x = golfBall.transform.position.x + newRadius * Mathf.Sin((-transform.eulerAngles.y).ToRadians());
-            pos.z = golfBall.transform.position.z + newRadius * Mathf.Cos((transform.eulerAngles.y + 180).ToRadians());
+            pos.x = golfBall.transform.position.x + radius * Mathf.Cos((transform.eulerAngles.x).ToRadians()) * Mathf.Sin((-transform.eulerAngles.y).ToRadians());
+            pos.z = golfBall.transform.position.z + radius * Mathf.Cos((transform.eulerAngles.x).ToRadians()) * Mathf.Cos((transform.eulerAngles.y + 180).ToRadians());
             pos.y = golfBall.transform.position.y + radius * Mathf.Sin((transform.eulerAngles.x).ToRadians());
             transform.position = pos;
         }

@@ -16,7 +16,7 @@ namespace CourseManagerLib
         private static GameObject pauseMenu;
 
         // Variables
-        private static bool isPaused = false;
+        public static bool isPaused = false;
 
         public static void TogglePauseLevel()
         {

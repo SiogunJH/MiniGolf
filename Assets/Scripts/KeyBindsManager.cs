@@ -31,5 +31,8 @@ public class KeyBindsManager : MonoBehaviour
         KeyBinds.Clear();
         KeyBinds.Add(KeyAction.LoadPowerMeter, KeyCode.Space);
         KeyBinds.Add(KeyAction.PauseLevel, KeyCode.Escape);
+        KeyBinds.Add(KeyAction.ZoomOut, KeyCode.Equals);
+        KeyBinds.Add(KeyAction.ZoomIn, KeyCode.Minus);
+        KeyBinds.Add(KeyAction.ZoomReset, KeyCode.Backspace);
     }
 }
