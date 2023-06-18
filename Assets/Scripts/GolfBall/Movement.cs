@@ -9,6 +9,10 @@ public partial class GolfBall : MonoBehaviour
     private bool tryingToStop;
     private Vector3 lastPos;
 
+    /// <summary>
+    /// Add velocity to the Golf Ball in the direction the arrow is pointing
+    /// </summary>
+    /// <param name="strength">Strength of a hit</param>
     void Hit(float strength)
     {
         float forceX = strength * (1 - arrow.rot.x / 90) * Mathf.Sin(arrow.rot.y.ToRadians());
@@ -19,6 +23,9 @@ public partial class GolfBall : MonoBehaviour
         Rb.AddTorque(forceZ, 0, -forceX, ForceMode.Impulse);
     }
 
+    /// <summary>
+    /// If the ball has velocity magnitude below 0.2 for over 0.5 seconds, stop and run PrepareForHit. Else, do nothing.
+    /// </summary>
     IEnumerator TryToStop()
     {
         tryingToStop = true;
@@ -39,13 +46,19 @@ public partial class GolfBall : MonoBehaviour
         tryingToStop = false;
     }
 
+    /// <summary>
+    /// Move the Golf Ball to specified position, without affecting its velocity nor its angular velocity.
+    /// </summary>
+    /// <param name="pos">Targeted position in which the Golf Ball will appear</param>
     void GoTo(Vector3 pos)
     {
-        Rb.velocity = new Vector3(0, 0, 0);
-        Rb.angularVelocity = new Vector3(0, 0, 0);
         transform.position = pos;
     }
 
+    /// <summary>
+    /// Set the Golf Ball velicty to 0, and thus stop its movement.
+    /// </summary>
+    /// <returns>Golf Ball velocity right before stopping</returns>
     public Vector3 StopMovement()
     {
         var velocity = Rb.velocity;
@@ -53,6 +66,10 @@ public partial class GolfBall : MonoBehaviour
         return velocity;
     }
 
+    /// <summary>
+    /// Set the Golf Ball angular velicty to 0, and thus stop its rotational movement.
+    /// </summary>
+    /// <returns>Golf Ball angular velocity right before stopping</returns>
     public Vector3 StopRotation()
     {
         var angularVelocity = Rb.angularVelocity;
@@ -60,9 +77,20 @@ public partial class GolfBall : MonoBehaviour
         return angularVelocity;
     }
 
+    /// <summary>
+    /// Enable arrow and allow player to hit
+    /// </summary>
+    /// <remarks>
+    /// Behave different, depending on what terrain the Golf Ball in collision with:
+    /// <list type="bullet">
+    ///     <item>OutOfBound Terrain: Send the OutOfBounds message, go back and allow for hit</item>
+    ///     <item>End Terrain: Go to the next level</item>
+    ///     <item>Default: Update lastPos and allow for hit</item>
+    /// </list>
+    /// </remarks>
     void PrepareForHit()
     {
-        //Stop and prepare for hit
+        //Prepare for hit
         Status = BallStatus.AwaitingHit;
         EnableArrow();
 
@@ -84,7 +112,7 @@ public partial class GolfBall : MonoBehaviour
             CourseManager.currentLevelID++;
             GoTo(CourseManager.GetStartingPoint());
 
-            //Set last position as current
+            //Set next level position as current
             lastPos = transform.position;
         }
         else //When still on the course
