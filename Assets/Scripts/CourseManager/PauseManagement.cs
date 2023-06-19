@@ -1,6 +1,7 @@
 using UnityEngine;
 using MessageBoxLib;
 using UnityEngine.SceneManagement;
+using UtilityLib;
 
 namespace CourseManagerLib
 {
@@ -15,17 +16,16 @@ namespace CourseManagerLib
         //Other
         private static GameObject pauseMenu;
 
-        // Variables
-        public static bool isPaused = false;
-
         public static void TogglePauseLevel()
         {
-            // Switch state
-            isPaused = !isPaused;
-
-            // Act accordingly
-            if (isPaused) PauseLevel();
-            else UnpauseLevel();
+            if (levelStatus == LevelStatus.Paused)
+            {
+                UnpauseLevel();
+            }
+            else if (levelStatus == LevelStatus.Ongoing)
+            {
+                PauseLevel();
+            }
         }
 
         public static void UnpauseLevel()
@@ -37,12 +37,11 @@ namespace CourseManagerLib
             golfBall.Status = golfBallStatus;
 
             // Cursor
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Utility.HideCursor();
 
             // Pause Menu
             pauseMenu.gameObject.SetActive(false);
-            isPaused = false;
+            levelStatus = LevelStatus.Ongoing;
         }
         public static void PauseLevel()
         {
@@ -56,12 +55,11 @@ namespace CourseManagerLib
             golfBall.Status = BallStatus.Disabled;
 
             // Cursor
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Utility.ShowCursor();
 
             // Pause Menu
             pauseMenu.gameObject.SetActive(true);
-            isPaused = true;
+            levelStatus = LevelStatus.Paused;
         }
     }
 }

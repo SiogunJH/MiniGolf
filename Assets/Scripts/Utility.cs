@@ -17,5 +17,17 @@ namespace UtilityLib
             if (loop) toRestrict += toRestrict < min ? max - min : toRestrict > max ? min - max : 0;
             else toRestrict = toRestrict < min ? min : toRestrict > max ? max : toRestrict;
         }
+        public static void ShowCursor()
+        {
+            // Cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        public static void HideCursor()
+        {
+            // Cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }

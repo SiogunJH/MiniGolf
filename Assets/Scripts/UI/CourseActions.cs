@@ -27,4 +27,9 @@ public class CourseActions : MonoBehaviour
     {
         CourseManager.UnpauseLevel();
     }
+
+    public static void NextLevel()
+    {
+        CourseManager.NextLevel();
+    }
 }

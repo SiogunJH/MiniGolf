@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UtilityLib;
+using CourseManagerLib;
 
 namespace ArrowLib
 {
@@ -26,6 +27,8 @@ namespace ArrowLib
 
         void LateUpdate()
         {
+            if (CourseManager.levelStatus != LevelStatus.Ongoing) return;
+
             //UPDATE ROTATION
             if (Input.GetKey(KeyCode.A)) rot.y -= 90 * Time.deltaTime;
             if (Input.GetKey(KeyCode.D)) rot.y += 90 * Time.deltaTime;

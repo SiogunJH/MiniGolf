@@ -41,7 +41,7 @@ public partial class GolfBall : MonoBehaviour
 
     void Update()
     {
-        if (CourseManager.isPaused) return;
+        if (CourseManager.levelStatus != LevelStatus.Ongoing) return;
 
         // Check if nearly still and if so, try to stop
         if (Status == BallStatus.Moving && !tryingToStop && Rb.velocity.magnitude < 0.25f)

@@ -28,16 +28,19 @@ namespace CourseManagerLib
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             // If main menu
-            if (SceneManager.GetActiveScene().name == "Main Menu")
+            if (scene.name == "Main Menu")
             {
                 return;
             }
 
             // If course
-            if (SceneManager.GetActiveScene().name == "Course")
+            if (scene.name == "Course")
             {
                 // Set Physics
                 Physics.gravity = new Vector3(0, -25, 0);
+
+                // Prepare Level Variables
+                levelStatus = LevelStatus.Ongoing;
 
                 // Prepare MessageBox
                 messageBox = GameObject.FindWithTag("Message Box").gameObject.GetComponent<MessageBox>();
@@ -47,7 +50,10 @@ namespace CourseManagerLib
                 // Prepare Pause Menu
                 pauseMenu = GameObject.FindWithTag("Pause Menu");
                 pauseMenu.gameObject.SetActive(false);
-                isPaused = false;
+
+                // Prepare Level Completion Menu
+                levelCompletionMenu = GameObject.FindWithTag("Level Completion Menu");
+                levelCompletionMenu.gameObject.SetActive(false);
 
                 // Prepare GolfBall
                 golfBall = GameObject.FindWithTag("Golf Ball").gameObject.GetComponent<GolfBall>();

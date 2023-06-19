@@ -12,6 +12,7 @@ TagManager:
   - Main Menu
   - Section Selection
   - Pause Menu
+  - Level Completion Menu
   layers:
   - Default
   - TransparentFX

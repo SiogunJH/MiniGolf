@@ -23,7 +23,7 @@ namespace CameraLib
 
         void Update()
         {
-            if (CourseManager.isPaused) return;
+            if (CourseManager.levelStatus != LevelStatus.Ongoing) return;
 
             //Zoom In
             if (Input.GetKey(KeyBindsManager.KeyBinds[KeyAction.ZoomIn]))
@@ -59,7 +59,7 @@ namespace CameraLib
 
         void LateUpdate()
         {
-            if (CourseManager.isPaused) return;
+            if (CourseManager.levelStatus != LevelStatus.Ongoing) return;
 
             // UPDATE ROTATION
             rot.y = (rot.y + Input.GetAxis("Mouse X"));

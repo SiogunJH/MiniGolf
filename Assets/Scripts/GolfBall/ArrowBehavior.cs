@@ -17,4 +17,9 @@ public partial class GolfBall : MonoBehaviour
     {
         arrow.gameObject.SetActive(true);
     }
+
+    public void ResetArrow()
+    {
+        arrow.rot = new();
+    }
 }

@@ -7,7 +7,7 @@ using UtilityLib;
 public partial class GolfBall : MonoBehaviour
 {
     private bool tryingToStop;
-    private Vector3 lastPos;
+    public Vector3 lastPos;
 
     /// <summary>
     /// Add velocity to the Golf Ball in the direction the arrow is pointing
@@ -50,7 +50,7 @@ public partial class GolfBall : MonoBehaviour
     /// Move the Golf Ball to specified position, without affecting its velocity nor its angular velocity.
     /// </summary>
     /// <param name="pos">Targeted position in which the Golf Ball will appear</param>
-    void GoTo(Vector3 pos)
+    public void GoTo(Vector3 pos)
     {
         transform.position = pos;
     }
@@ -108,12 +108,8 @@ public partial class GolfBall : MonoBehaviour
         }
         else if (currentlyColliding.Contains(TerrainType.End)) //When in the hole
         {
-            //Go to the next level
-            CourseManager.currentLevelID++;
-            GoTo(CourseManager.GetStartingPoint());
-
-            //Set next level position as current
-            lastPos = transform.position;
+            // Complete level
+            CourseManager.OpenLevelCompletionMenu();
         }
         else //When still on the course
         {
