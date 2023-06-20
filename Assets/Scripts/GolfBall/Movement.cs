@@ -90,10 +90,6 @@ public partial class GolfBall : MonoBehaviour
     /// </remarks>
     void PrepareForHit()
     {
-        //Prepare for hit
-        Status = BallStatus.AwaitingHit;
-        EnableArrow();
-
         if (currentlyColliding.Contains(TerrainType.OutOfBound)) //When out of bounds
         {
             //Send OutOfBounds message

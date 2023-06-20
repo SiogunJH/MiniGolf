@@ -30,7 +30,7 @@ namespace CourseManagerLib
             }
 
             //Return levelObject's starting position
-            return levelObject.transform.Find("Tee").transform.position + new Vector3(0, 0.52f, 0);
+            return levelObject.transform.Find("Tee").transform.position + new Vector3(0, 0.5f, 0);
         }
         public static void RestartLevel()
         {
