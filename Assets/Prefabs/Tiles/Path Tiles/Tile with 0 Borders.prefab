@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3810311614921757485}
   m_Layer: 0
-  m_Name: Empty Tile
+  m_Name: Tile with 0 Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
