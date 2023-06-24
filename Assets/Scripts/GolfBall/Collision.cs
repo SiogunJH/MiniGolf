@@ -8,7 +8,7 @@ public partial class GolfBall : MonoBehaviour
     [HideInInspector] public GameObject terrainCluster;
 
     // List of TerrainTypes currently colliding with GolfBall
-    [SerializeField] private List<TerrainType> currentlyColliding;
+    private List<TerrainType> currentlyColliding;
 
     //On entering collision
     void OnCollisionEnter(Collision collision)
@@ -69,6 +69,10 @@ public partial class GolfBall : MonoBehaviour
         else if (currentlyColliding.Contains(TerrainType.Plastic))
         {
             Rb.drag = 0.2f;
+        }
+        else if (currentlyColliding.Contains(TerrainType.Ice))
+        {
+            Rb.drag = 0.15f;
         }
         else
         {

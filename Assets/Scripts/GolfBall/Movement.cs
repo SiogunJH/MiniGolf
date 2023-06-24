@@ -7,7 +7,7 @@ using UtilityLib;
 public partial class GolfBall : MonoBehaviour
 {
     private bool tryingToStop;
-    public Vector3 lastPos;
+    [HideInInspector] public Vector3 lastPos;
 
     /// <summary>
     /// Add velocity to the Golf Ball in the direction the arrow is pointing

@@ -8,5 +8,6 @@ public enum TerrainType
     Metal,
     OutOfBound,
     Hole,
-    End
+    End,
+    Ice
 }

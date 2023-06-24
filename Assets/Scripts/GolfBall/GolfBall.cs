@@ -6,9 +6,9 @@ using CourseManagerLib;
 public partial class GolfBall : MonoBehaviour
 {
     // Golf Ball refs and vars
-    public BoxCollider Col;
-    public Rigidbody Rb;
-    public BallStatus Status;
+    [HideInInspector] public BoxCollider Col;
+    [HideInInspector] public Rigidbody Rb;
+    [HideInInspector] public BallStatus Status;
 
     // Power Meter refs and vars
     private PowerMeter powerMeter;

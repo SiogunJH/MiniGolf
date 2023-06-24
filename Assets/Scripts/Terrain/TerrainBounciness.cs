@@ -8,6 +8,7 @@ namespace TerrainLib
     {
         { TerrainType.Wood, 0.6f },
         { TerrainType.Plastic, 0.5f },
+        { TerrainType.Ice, 0.4f },
         { TerrainType.Grass, 0.25f },
         { TerrainType.OutOfBound, 0.25f },
         { TerrainType.Hole, 0.1f },
